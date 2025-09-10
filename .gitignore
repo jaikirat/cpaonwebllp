@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+*.lcov
+.nyc_output
+junit.xml
 
 # next.js
 /.next/
@@ -19,6 +22,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -29,13 +33,91 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+lerna-debug.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
 
+# cloudflare pages
+functions/.DS_Store
+functions/node_modules/
+.wrangler/
+wrangler.toml.bak
+.cloudflare/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.tsc-cache/
+
+# IDEs and editors
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Lock files (uncomment if using a specific package manager)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

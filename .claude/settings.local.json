@@ -10,7 +10,20 @@
       "Bash(timeout 10s npm run dev)",
       "Bash(npx @next/codemod@canary next-lint-to-eslint-cli:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(test:*)",
+      "Bash(npx jest:*)",
+      "Bash(./node_modules/.bin/jest:*)",
+      "Bash(.\\node_modules\\.bin\\jest:*)",
+      "Bash(powershell:*)",
+      "Bash(cmd /c:*)",
+      "Bash(findstr:*)",
+      "Bash(npx ts-jest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx next build:*)"
     ],
     "deny": [],
     "ask": []
