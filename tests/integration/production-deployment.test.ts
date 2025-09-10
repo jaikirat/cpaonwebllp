@@ -1,19 +1,20 @@
 /**
  * Production Deployment Integration Test
- * 
+ *
  * This test validates step 7 of the quickstart guide:
  * - Staging deployment updates correctly
  * - Production deployment triggers on main branch merge
  * - Production site accessible at custom domain
  * - No build or deployment errors
- * 
- * Following TDD approach - this test WILL FAIL initially until 
+ *
+ * Following TDD approach - this test WILL FAIL initially until
  * the production deployment infrastructure is properly configured.
  */
 
-import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+
+import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 import fetch from 'node-fetch';
 
 const execAsync = promisify(exec);
@@ -52,7 +53,7 @@ describe('Production Deployment Integration Test', () => {
     cloudflareApiToken: process.env.CLOUDFLARE_API_TOKEN,
     githubToken: process.env.GITHUB_TOKEN,
     repositoryName: process.env.GITHUB_REPO_NAME || 'cpaonwebllp',
-    repositoryOwner: process.env.GITHUB_REPO_OWNER || 'JAIKIRAT'
+    repositoryOwner: process.env.GITHUB_REPO_OWNER || 'JAIKIRAT',
   };
 
   let testBranchName: string;
@@ -62,12 +63,12 @@ describe('Production Deployment Integration Test', () => {
   beforeAll(async () => {
     // Generate unique test branch name
     testBranchName = `test-prod-deploy-${Date.now()}`;
-    
+
     // Get initial commit SHAs for cleanup
     try {
       const { stdout: mainCommit } = await execAsync('git rev-parse main');
       initialMainCommit = mainCommit.trim();
-      
+
       const { stdout: stagingCommit } = await execAsync('git rev-parse staging');
       initialStagingCommit = stagingCommit.trim();
     } catch (error) {
@@ -109,17 +110,17 @@ describe('Production Deployment Integration Test', () => {
         {
           headers: {
             'Authorization': `Bearer ${config.githubToken}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
-        }
+            'Accept': 'application/vnd.github.v3+json',
+          },
+        },
       );
 
       expect(response.ok).toBe(true);
       const branches: GitHubBranch[] = await response.json();
-      
+
       const mainBranch = branches.find(b => b.name === 'main');
       const stagingBranch = branches.find(b => b.name === 'staging');
-      
+
       expect(mainBranch).toBeDefined();
       expect(stagingBranch).toBeDefined();
       expect(mainBranch?.protected).toBe(true);
@@ -136,8 +137,8 @@ describe('Production Deployment Integration Test', () => {
       const response = await fetch('https://api.cloudflare.com/client/v4/user', {
         headers: {
           'Authorization': `Bearer ${config.cloudflareApiToken}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
 
       expect(response.ok).toBe(true);
@@ -173,10 +174,10 @@ describe('Production Deployment Integration Test', () => {
   describe('Deployment Workflow Simulation', () => {
     test('should create feature branch and trigger preview deployment', async () => {
       // This test will FAIL initially - requires proper CI/CD setup
-      
+
       // Create and checkout feature branch
       await execAsync(`git checkout -b ${testBranchName}`);
-      
+
       // Make a test change
       const testContent = `export default function ProductionTestPage() {
         return (
@@ -187,15 +188,15 @@ describe('Production Deployment Integration Test', () => {
           </div>
         );
       }`;
-      
+
       await execAsync(`mkdir -p src/app/production-test`);
       await execAsync(`echo '${testContent}' > src/app/production-test/page.tsx`);
-      
+
       // Commit and push
       await execAsync(`git add .`);
       await execAsync(`git commit -m "Add production deployment test page - ${testBranchName}"`);
       await execAsync(`git push -u origin ${testBranchName}`);
-      
+
       // Verify branch was created
       const { stdout } = await execAsync(`git branch -r`);
       expect(stdout).toContain(`origin/${testBranchName}`);
@@ -203,18 +204,18 @@ describe('Production Deployment Integration Test', () => {
 
     test('should merge to staging and trigger staging deployment', async () => {
       // This test will FAIL initially - requires proper PR workflow
-      
+
       // Switch to staging branch
       await execAsync('git checkout staging');
       await execAsync('git pull origin staging');
-      
+
       // Merge test branch to staging (simulating PR merge)
       await execAsync(`git merge ${testBranchName} --no-ff -m "Merge ${testBranchName} to staging"`);
       await execAsync('git push origin staging');
-      
+
       // Wait for deployment to process (in real scenario)
       await new Promise(resolve => setTimeout(resolve, 5000));
-      
+
       // Verify staging deployment
       const stagingResponse = await fetch(config.stagingUrl);
       expect(stagingResponse.ok).toBe(true);
@@ -222,26 +223,26 @@ describe('Production Deployment Integration Test', () => {
 
     test('should merge to main and trigger production deployment', async () => {
       // This is the core test for step 7 - will FAIL initially
-      
+
       // Switch to main branch
       await execAsync('git checkout main');
       await execAsync('git pull origin main');
-      
+
       // Merge staging to main (simulating production PR merge)
       await execAsync('git merge staging --no-ff -m "Deploy tested changes to production"');
       await execAsync('git push origin main');
-      
+
       // Wait for production deployment to process
       await new Promise(resolve => setTimeout(resolve, 10000));
-      
+
       // Verify production deployment
       const productionResponse = await fetch(config.productionUrl);
       expect(productionResponse.ok).toBe(true);
-      
+
       // Verify the test page is accessible
       const testPageResponse = await fetch(`${config.productionUrl}/production-test`);
       expect(testPageResponse.ok).toBe(true);
-      
+
       const content = await testPageResponse.text();
       expect(content).toContain('Production Deployment Test');
       expect(content).toContain(testBranchName);
@@ -260,7 +261,7 @@ describe('Production Deployment Integration Test', () => {
       // This test will FAIL initially - security headers need configuration
       const response = await fetch(config.productionUrl);
       const headers = response.headers;
-      
+
       expect(headers.get('x-frame-options')).toBeTruthy();
       expect(headers.get('x-content-type-options')).toBe('nosniff');
       expect(headers.get('strict-transport-security')).toBeTruthy();
@@ -271,10 +272,10 @@ describe('Production Deployment Integration Test', () => {
       const startTime = Date.now();
       const response = await fetch(config.productionUrl);
       const loadTime = Date.now() - startTime;
-      
+
       expect(response.ok).toBe(true);
       expect(loadTime).toBeLessThan(3000); // Page should load in under 3 seconds
-      
+
       // Check for performance indicators
       const content = await response.text();
       expect(content).toContain('<!DOCTYPE html>');
@@ -285,7 +286,7 @@ describe('Production Deployment Integration Test', () => {
       // This test will FAIL initially - caching needs to be configured
       const response = await fetch(config.productionUrl);
       expect(response.ok).toBe(true);
-      
+
       // Check for caching headers (Next.js should set these automatically)
       const cacheControl = response.headers.get('cache-control');
       expect(cacheControl).toBeTruthy();
@@ -308,7 +309,7 @@ describe('Production Deployment Integration Test', () => {
       // Verify both environments are accessible and serving similar content
       const [prodResponse, stagingResponse] = await Promise.all([
         fetch(config.productionUrl),
-        fetch(config.stagingUrl)
+        fetch(config.stagingUrl),
       ]);
 
       expect(prodResponse.ok).toBe(true);
@@ -317,7 +318,7 @@ describe('Production Deployment Integration Test', () => {
       // Both should be HTML documents
       const [prodContent, stagingContent] = await Promise.all([
         prodResponse.text(),
-        stagingResponse.text()
+        stagingResponse.text(),
       ]);
 
       expect(prodContent).toContain('<!DOCTYPE html>');

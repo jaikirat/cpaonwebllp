@@ -43,8 +43,8 @@ if (missingScripts.length > 0) {
 console.log('✅ Test scripts configured in package.json');
 
 const requiredDeps = ['jest', 'ts-jest', 'node-fetch', '@types/jest'];
-const missingDeps = requiredDeps.filter(dep => 
-  !pkg.devDependencies[dep] && !pkg.dependencies[dep]
+const missingDeps = requiredDeps.filter(dep =>
+  !pkg.devDependencies[dep] && !pkg.dependencies[dep],
 );
 if (missingDeps.length > 0) {
   console.error(`❌ Missing dependencies: ${missingDeps.join(', ')}`);
@@ -74,11 +74,11 @@ const failureIndicators = [
   'This test will FAIL initially',
   'WILL FAIL',
   'Following TDD approach',
-  'environment variables need to be set up'
+  'environment variables need to be set up',
 ];
 
-const hasFailureIndicators = failureIndicators.some(indicator => 
-  testContent.includes(indicator)
+const hasFailureIndicators = failureIndicators.some(indicator =>
+  testContent.includes(indicator),
 );
 
 if (!hasFailureIndicators) {

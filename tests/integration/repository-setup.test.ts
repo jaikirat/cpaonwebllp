@@ -1,10 +1,10 @@
 /**
  * Integration Test: Repository Setup Validation
- * 
+ *
  * Tests the repository setup process as documented in quickstart.md step 2.
  * Validates that Git repository is initialized correctly and GitHub connection
  * is established as per the documented workflow.
- * 
+ *
  * This test follows TDD approach and should FAIL initially until proper
  * repository setup is completed.
  */
@@ -27,7 +27,7 @@ describe('Repository Setup Validation', () => {
       expect(existsSync(gitignorePath)).toBe(true);
 
       const gitignoreContent = readFileSync(gitignorePath, 'utf-8');
-      
+
       // Verify essential Next.js entries are in .gitignore
       expect(gitignoreContent).toContain('node_modules');
       expect(gitignoreContent).toContain('.next');
@@ -38,14 +38,14 @@ describe('Repository Setup Validation', () => {
     test('should have initial commit with proper message', () => {
       try {
         // Get the initial commit message
-        const commitMessage = execSync('git log --oneline -1', { 
+        const commitMessage = execSync('git log --oneline -1', {
           encoding: 'utf-8',
-          cwd: projectRoot 
+          cwd: projectRoot,
         }).trim();
 
         // Verify there's at least one commit
         expect(commitMessage).toBeTruthy();
-        
+
         // Check if commit message follows expected pattern
         const expectedCommitPattern = /Initial|Setup|Create/i;
         expect(commitMessage).toMatch(expectedCommitPattern);
@@ -58,7 +58,7 @@ describe('Repository Setup Validation', () => {
       try {
         const currentBranch = execSync('git branch --show-current', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         expect(currentBranch).toBe('main');
@@ -73,12 +73,12 @@ describe('Repository Setup Validation', () => {
       try {
         const remoteUrl = execSync('git remote get-url origin', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         // Verify remote points to GitHub
         expect(remoteUrl).toMatch(/github\.com/);
-        
+
         // Verify it's a valid repository URL format
         const githubUrlPattern = /^https:\/\/github\.com\/[\w\-\.]+\/[\w\-\.]+(?:\.git)?$/;
         expect(remoteUrl).toMatch(githubUrlPattern);
@@ -92,7 +92,7 @@ describe('Repository Setup Validation', () => {
         // Test if remote repository is accessible
         execSync('git ls-remote origin', {
           cwd: projectRoot,
-          stdio: 'pipe'
+          stdio: 'pipe',
         });
       } catch (error) {
         fail('Remote GitHub repository should be accessible');
@@ -104,7 +104,7 @@ describe('Repository Setup Validation', () => {
         // Check if main branch exists on remote
         const remoteBranches = execSync('git branch -r', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         });
 
         expect(remoteBranches).toContain('origin/main');
@@ -120,22 +120,22 @@ describe('Repository Setup Validation', () => {
         // Check if staging branch exists locally
         const localBranches = execSync('git branch', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         });
 
         const hasLocalStagingBranch = localBranches.includes('staging');
-        
+
         // Check if staging branch exists on remote
         const remoteBranches = execSync('git branch -r', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         });
 
         const hasRemoteStagingBranch = remoteBranches.includes('origin/staging');
 
         // Staging branch should exist either locally or remotely (or both)
         expect(hasLocalStagingBranch || hasRemoteStagingBranch).toBe(true);
-        
+
         // If staging exists locally, it should also exist remotely
         if (hasLocalStagingBranch) {
           expect(hasRemoteStagingBranch).toBe(true);
@@ -150,21 +150,21 @@ describe('Repository Setup Validation', () => {
         // Get current branch
         const initialBranch = execSync('git branch --show-current', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         // Try to switch to staging (create if doesn't exist)
         try {
           execSync('git checkout staging', {
             cwd: projectRoot,
-            stdio: 'pipe'
+            stdio: 'pipe',
           });
         } catch {
           // If staging doesn't exist locally, fetch it from remote or create it
           try {
             execSync('git checkout -b staging origin/staging', {
               cwd: projectRoot,
-              stdio: 'pipe'
+              stdio: 'pipe',
             });
           } catch {
             // If remote staging doesn't exist, this test should fail
@@ -175,14 +175,14 @@ describe('Repository Setup Validation', () => {
         // Verify we're now on staging
         const currentBranch = execSync('git branch --show-current', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
         expect(currentBranch).toBe('staging');
 
         // Switch back to original branch
         execSync(`git checkout ${initialBranch}`, {
           cwd: projectRoot,
-          stdio: 'pipe'
+          stdio: 'pipe',
         });
       } catch (error) {
         fail('Should be able to switch between main and staging branches');
@@ -195,22 +195,22 @@ describe('Repository Setup Validation', () => {
       try {
         const status = execSync('git status --porcelain', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         // Working directory should be clean (no uncommitted changes)
         // Allow some flexibility for test files or development artifacts
         const lines = status.split('\n').filter(line => line.trim());
-        const nonTestFiles = lines.filter(line => 
-          !line.includes('test') && 
+        const nonTestFiles = lines.filter(line =>
+          !line.includes('test') &&
           !line.includes('.log') &&
-          !line.includes('node_modules')
+          !line.includes('node_modules'),
         );
 
         if (nonTestFiles.length > 0) {
           console.warn('Uncommitted changes detected:', nonTestFiles);
         }
-        
+
         // This is more of a warning than a hard failure for development
         expect(true).toBe(true); // Always pass but log warning above
       } catch (error) {
@@ -223,12 +223,12 @@ describe('Repository Setup Validation', () => {
         // Check that user name and email are configured
         const userName = execSync('git config user.name', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         const userEmail = execSync('git config user.email', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         expect(userName).toBeTruthy();
@@ -246,7 +246,7 @@ describe('Repository Setup Validation', () => {
         // Check if key project files are tracked by Git
         const trackedFiles = execSync('git ls-files', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         });
 
         const essentialFiles = [
@@ -255,7 +255,7 @@ describe('Repository Setup Validation', () => {
           'next.config.ts',
           'tailwind.config.ts',
           'src/app/layout.tsx',
-          'src/app/page.tsx'
+          'src/app/page.tsx',
         ];
 
         essentialFiles.forEach(file => {
@@ -276,7 +276,7 @@ describe('Repository Setup Validation', () => {
         '.next',
         'out',
         '.env.local',
-        '.vercel'
+        '.vercel',
       ];
 
       requiredIgnores.forEach(pattern => {
@@ -288,18 +288,18 @@ describe('Repository Setup Validation', () => {
 
 /**
  * Test Configuration Notes:
- * 
+ *
  * This test suite is designed to FAIL initially following TDD principles.
- * 
+ *
  * Expected failures until repository setup is complete:
  * 1. GitHub remote origin not configured
  * 2. Staging branch not created/pushed
  * 3. Initial commit not made
  * 4. Repository not connected to GitHub
- * 
+ *
  * Success criteria (when all tests pass):
  * ✅ Local Git repository initialized with proper .gitignore
- * ✅ GitHub repository created and connected  
+ * ✅ GitHub repository created and connected
  * ✅ Main branch pushed with initial commit
  * ✅ Staging branch created and pushed
  * ✅ Clean working directory status
