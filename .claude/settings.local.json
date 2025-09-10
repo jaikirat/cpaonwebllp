@@ -30,7 +30,8 @@
       "Bash(refreshenv)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" --version)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth login)",
-      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)"
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []

@@ -88,16 +88,16 @@
 - [ ] T035 Configure DNS records for custom domains
 
 ## Phase 3.5: Polish
-- [ ] T036 [P] Create comprehensive README.md with project description, setup, development, and deployment instructions
-- [ ] T037 [P] Create .github/pull_request_template.md with required sections
-- [ ] T038 [P] Create .github/ISSUE_TEMPLATE/bug_report.md issue template
-- [ ] T039 [P] Create .github/ISSUE_TEMPLATE/feature_request.md issue template
-- [ ] T040 [P] Create CONTRIBUTING.md with development setup and PR process
-- [ ] T041 Run complete validation checklist from quickstart.md
-- [ ] T042 Verify TypeScript compilation with `npm run type-check`
-- [ ] T043 Verify ESLint passes with `npm run lint`
-- [ ] T044 Verify production build succeeds with `npm run build`
-- [ ] T045 Create feature branch and test complete deployment workflow
+- [x] T036 [P] Create comprehensive README.md with project description, setup, development, and deployment instructions
+- [x] T037 [P] Create .github/pull_request_template.md with required sections
+- [x] T038 [P] Create .github/ISSUE_TEMPLATE/bug_report.md issue template
+- [x] T039 [P] Create .github/ISSUE_TEMPLATE/feature_request.md issue template
+- [x] T040 [P] Create CONTRIBUTING.md with development setup and PR process
+- [x] T041 Run complete validation checklist from quickstart.md
+- [x] T042 Verify TypeScript compilation with `npm run type-check`
+- [x] T043 Verify ESLint passes with `npm run lint`
+- [x] T044 Verify production build succeeds with `npm run build`
+- [x] T045 Create feature branch and test complete deployment workflow
 
 ## Dependencies
 - Setup (T001-T007) before tests (T008-T017)
