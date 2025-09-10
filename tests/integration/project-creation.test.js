@@ -1,11 +1,11 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
-const path = require('path');
 const os = require('os');
+const path = require('path');
 
 /**
  * Integration Test: Project Creation Validation
- * 
+ *
  * This test validates the project creation process as documented in
  * quickstart.md step 1. It ensures that:
  * 1. Next.js project is created with correct configuration
@@ -15,7 +15,7 @@ const os = require('os');
  * 5. Build process succeeds
  * 6. Development server can start
  * 7. ESLint runs without errors
- * 
+ *
  * Following TDD approach - this test should FAIL initially until
  * the project setup is properly implemented.
  */
@@ -47,12 +47,12 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
 
       // Execute the create-next-app command as documented in quickstart.md
       const createCommand = `npx create-next-app@latest ${projectName} --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --yes`;
-      
+
       expect(() => {
-        execSync(createCommand, { 
-          cwd: testProjectDir, 
+        execSync(createCommand, {
+          cwd: testProjectDir,
           stdio: 'pipe',
-          timeout: 300000 // 5 minutes timeout for project creation
+          timeout: 300000, // 5 minutes timeout for project creation
         });
       }).not.toThrow();
 
@@ -74,7 +74,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
         '.gitignore',
         'src/app/layout.tsx',
         'src/app/page.tsx',
-        'src/app/globals.css'
+        'src/app/globals.css',
       ];
 
       requiredFiles.forEach(file => {
@@ -87,7 +87,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
         'src',
         'src/app',
         'public',
-        'node_modules'
+        'node_modules',
       ];
 
       requiredDirs.forEach(dir => {
@@ -167,7 +167,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
       // Add type-check script if not present
       const packageJsonPath = path.join(process.cwd(), 'package.json');
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-      
+
       if (!packageJson.scripts['type-check']) {
         packageJson.scripts['type-check'] = 'tsc --noEmit';
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
@@ -175,9 +175,9 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
 
       // Run type check - should pass without errors
       expect(() => {
-        execSync('npm run type-check', { 
+        execSync('npm run type-check', {
           stdio: 'pipe',
-          timeout: 60000 // 1 minute timeout
+          timeout: 60000, // 1 minute timeout
         });
       }).not.toThrow();
     }, 60000);
@@ -185,9 +185,9 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
     test('should pass ESLint validation', () => {
       // Run ESLint - should pass without errors
       expect(() => {
-        execSync('npm run lint', { 
+        execSync('npm run lint', {
           stdio: 'pipe',
-          timeout: 60000 // 1 minute timeout
+          timeout: 60000, // 1 minute timeout
         });
       }).not.toThrow();
     }, 60000);
@@ -195,9 +195,9 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
     test('should build successfully', () => {
       // Run build process - should complete successfully
       expect(() => {
-        execSync('npm run build', { 
+        execSync('npm run build', {
           stdio: 'pipe',
-          timeout: 180000 // 3 minutes timeout for build
+          timeout: 180000, // 3 minutes timeout for build
         });
       }).not.toThrow();
 
@@ -217,15 +217,15 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
     test('should start development server successfully', () => {
       // This test checks if the dev server can start without immediate errors
       // We don't keep it running to avoid hanging the test suite
-      
+
       let devProcess;
       try {
         const { spawn } = require('child_process');
-        
+
         // Start dev server
         devProcess = spawn('npm', ['run', 'dev'], {
           stdio: 'pipe',
-          detached: false
+          detached: false,
         });
 
         let output = '';
@@ -279,7 +279,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
           devProcess.kill('SIGTERM');
           // Give it a moment to clean up
           await new Promise(resolve => setTimeout(resolve, 1000));
-          
+
           // Force kill if still running
           if (!devProcess.killed) {
             devProcess.kill('SIGKILL');
@@ -310,7 +310,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
       expect(fs.existsSync(gitignorePath)).toBe(true);
 
       const gitignoreContent = fs.readFileSync(gitignorePath, 'utf8');
-      
+
       // Verify important entries are ignored
       const expectedIgnores = ['.next/', 'node_modules/', '.env'];
       expectedIgnores.forEach(ignore => {
@@ -323,13 +323,13 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
       const appRouterFiles = [
         'src/app/layout.tsx',
         'src/app/page.tsx',
-        'src/app/globals.css'
+        'src/app/globals.css',
       ];
 
       appRouterFiles.forEach(file => {
         const filePath = path.join(process.cwd(), file);
         expect(fs.existsSync(filePath)).toBe(true);
-        
+
         // Verify files are not empty
         const content = fs.readFileSync(filePath, 'utf8').trim();
         expect(content.length).toBeGreaterThan(0);
@@ -374,7 +374,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
     test('should meet all success criteria from quickstart.md step 1', () => {
       // This test summarizes all the success criteria mentioned in the quickstart guide:
       // ✅ TypeScript compilation succeeds without errors - covered by type-check test
-      // ✅ Build process completes successfully - covered by build test  
+      // ✅ Build process completes successfully - covered by build test
       // ✅ Development server starts and serves content - covered by dev server test
       // ✅ ESLint runs without errors - covered by lint test
 
@@ -386,13 +386,13 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
         '.eslintrc.json',
         'tailwind.config.ts',
         'src/app/layout.tsx',
-        'src/app/page.tsx'
+        'src/app/page.tsx',
       ];
 
       criticalFiles.forEach(file => {
         const filePath = path.join(process.cwd(), file);
         expect(fs.existsSync(filePath)).toBe(true);
-        
+
         // Ensure files are not empty (basic content validation)
         const stat = fs.statSync(filePath);
         expect(stat.size).toBeGreaterThan(0);
@@ -410,7 +410,7 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
 
 /**
  * Test Configuration Notes:
- * 
+ *
  * This integration test is designed to FAIL initially as per TDD approach.
  * It will pass only when:
  * 1. A proper Next.js TypeScript project is created
@@ -418,11 +418,11 @@ describe('Project Creation Validation (Quickstart Step 1)', () => {
  * 3. Configuration files are properly set up
  * 4. The build process works correctly
  * 5. TypeScript and ESLint validation passes
- * 
+ *
  * To run this test:
  * npm install --save-dev jest
  * npx jest tests/integration/project-creation.test.js
- * 
+ *
  * The test creates a temporary project in the system temp directory
  * and cleans up after completion to avoid polluting the workspace.
  */
