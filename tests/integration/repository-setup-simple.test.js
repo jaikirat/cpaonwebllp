@@ -1,6 +1,6 @@
 /**
  * Simple Integration Test: Repository Setup Validation
- * 
+ *
  * JavaScript version for testing basic repository setup functionality
  * without TypeScript dependencies.
  */
@@ -29,9 +29,9 @@ describe('Repository Setup Validation (Simple)', () => {
 
     test('should be able to run git status', () => {
       expect(() => {
-        execSync('git status', { 
+        execSync('git status', {
           cwd: projectRoot,
-          stdio: 'pipe'
+          stdio: 'pipe',
         });
       }).not.toThrow();
     });
@@ -40,7 +40,7 @@ describe('Repository Setup Validation (Simple)', () => {
       try {
         const currentBranch = execSync('git branch --show-current', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         }).trim();
 
         expect(['main', 'master']).toContain(currentBranch);
@@ -48,9 +48,9 @@ describe('Repository Setup Validation (Simple)', () => {
         // If git branch --show-current fails, try alternative
         const branches = execSync('git branch', {
           encoding: 'utf-8',
-          cwd: projectRoot
+          cwd: projectRoot,
         });
-        
+
         expect(branches).toMatch(/\*\s+(main|master)/);
       }
     });

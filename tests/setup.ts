@@ -1,6 +1,6 @@
 /**
  * Jest Test Setup Configuration
- * 
+ *
  * Global test setup for integration tests.
  * This file runs before all tests and configures the test environment.
  */
@@ -50,7 +50,7 @@ global.fetch = jest.fn((_input: any, _init?: any) =>
     formData: () => Promise.resolve(new FormData()),
     text: () => Promise.resolve('Service not configured'),
     json: () => Promise.resolve({ error: 'Service not configured' }),
-  } as unknown as Response)
+  } as unknown as Response),
 ) as jest.MockedFunction<typeof fetch>;
 
 // Add custom matchers if needed

@@ -44,7 +44,7 @@ const imageData = Buffer.alloc(16 * 16 * 4);
 for (let y = 0; y < 16; y++) {
   for (let x = 0; x < 16; x++) {
     const offset = ((15 - y) * 16 + x) * 4; // Flip vertically for BMP format
-    
+
     // Create a simple pattern
     if (x >= 4 && x < 12 && y >= 4 && y < 12) {
       // Blue square in center
@@ -71,7 +71,7 @@ const icoData = Buffer.concat([
   dirEntry,
   bmpHeader,
   imageData,
-  andMask
+  andMask,
 ]);
 
 // Write the favicon

@@ -1,10 +1,10 @@
 /**
  * Integration Test: Branch Protection Validation
- * 
+ *
  * This test validates the branch protection configuration as defined in
  * quickstart.md step 3. It ensures that both main and staging branches
  * have proper protection rules configured.
- * 
+ *
  * Note: This test is designed to FAIL initially (TDD approach) until
  * proper branch protection is configured in the GitHub repository.
  */
@@ -36,7 +36,7 @@ describe('Branch Protection Integration Tests', () => {
             // Fetch branch protection rules using GitHub CLI
             const result = execSync(
               `gh api repos/${REPO_OWNER}/${REPO_NAME}/branches/${branch}/protection`,
-              { encoding: 'utf8', stdio: 'pipe' }
+              { encoding: 'utf8', stdio: 'pipe' },
             );
             branchProtection = JSON.parse(result);
           } catch (error: any) {
@@ -62,7 +62,7 @@ describe('Branch Protection Integration Tests', () => {
         test('should have required status checks configured', () => {
           expect(branchProtection?.required_status_checks).toBeDefined();
           expect(branchProtection.required_status_checks.strict).toBe(true);
-          
+
           const contexts = branchProtection.required_status_checks.contexts;
           REQUIRED_STATUS_CHECKS.forEach(check => {
             expect(contexts).toContain(check);
@@ -87,7 +87,7 @@ describe('Branch Protection Integration Tests', () => {
       // This test checks if the required status checks are configured in the workflow
       const workflows = await getWorkflowFiles();
       expect(workflows.length).toBeGreaterThan(0);
-      
+
       // Check that the workflow includes the required checks
       const workflowContent = await readWorkflowContent(workflows[0]);
       REQUIRED_STATUS_CHECKS.forEach(check => {
@@ -101,10 +101,10 @@ describe('Branch Protection Integration Tests', () => {
         // Check if there's a pages.dev deployment or custom domain configured
         const result = execSync(
           `gh api repos/${REPO_OWNER}/${REPO_NAME}/pages`,
-          { encoding: 'utf8', stdio: 'pipe' }
+          { encoding: 'utf8', stdio: 'pipe' },
         );
         const pagesConfig = JSON.parse(result);
-        
+
         expect(pagesConfig).toBeDefined();
         expect(pagesConfig.source?.branch).toMatch(/main|master/);
       } catch (error: any) {
@@ -114,7 +114,7 @@ describe('Branch Protection Integration Tests', () => {
           // Instead, verify deployment history exists
           const deployments = execSync(
             `gh api repos/${REPO_OWNER}/${REPO_NAME}/deployments --paginate`,
-            { encoding: 'utf8', stdio: 'pipe' }
+            { encoding: 'utf8', stdio: 'pipe' },
           );
           const deploymentsData = JSON.parse(deployments);
           expect(deploymentsData.length).toBeGreaterThan(0);
@@ -130,14 +130,14 @@ describe('Branch Protection Integration Tests', () => {
       // This test simulates attempting a direct push (should fail)
       // Note: This is a conceptual test - in practice, you'd need to set up
       // a separate test repository or use GitHub's API to simulate this
-      
+
       const protectedBranches = ['main', 'staging'];
-      
+
       for (const branch of protectedBranches) {
         try {
           // Check if branch exists
           execSync(`git ls-remote --heads origin ${branch}`, { stdio: 'pipe' });
-          
+
           // If we get here, the branch exists and protection should be in place
           expect(true).toBe(true); // Branch exists
         } catch (error) {
@@ -153,13 +153,13 @@ describe('Branch Protection Integration Tests', () => {
         try {
           const result = execSync(
             `gh api repos/${REPO_OWNER}/${REPO_NAME}/branches/${branch}/protection`,
-            { encoding: 'utf8', stdio: 'pipe' }
+            { encoding: 'utf8', stdio: 'pipe' },
           );
           const protection = JSON.parse(result);
-          
+
           expect(protection.required_status_checks).toBeDefined();
           expect(protection.required_status_checks.strict).toBe(true);
-          
+
           const requiredChecks = protection.required_status_checks.contexts;
           expect(requiredChecks).toEqual(expect.arrayContaining(REQUIRED_STATUS_CHECKS));
         } catch (error: any) {
@@ -176,9 +176,9 @@ describe('Branch Protection Integration Tests', () => {
 // Helper functions
 async function getWorkflowFiles(): Promise<string[]> {
   try {
-    const result = execSync('find .github/workflows -name "*.yml" -o -name "*.yaml" 2>/dev/null', { 
-      encoding: 'utf8', 
-      stdio: 'pipe' 
+    const result = execSync('find .github/workflows -name "*.yml" -o -name "*.yaml" 2>/dev/null', {
+      encoding: 'utf8',
+      stdio: 'pipe',
     });
     return result.trim().split('\n').filter(f => f.length > 0);
   } catch {
@@ -198,5 +198,5 @@ async function readWorkflowContent(workflowPath: string): Promise<string> {
 // Export for potential use in other test files
 export {
   PROTECTED_BRANCHES,
-  REQUIRED_STATUS_CHECKS
+  REQUIRED_STATUS_CHECKS,
 };

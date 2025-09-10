@@ -1,19 +1,20 @@
 /**
  * Integration Test: Custom Domain Setup Validation
- * 
+ *
  * Tests the custom domain configuration requirements from quickstart.md step 5:
  * 1. Custom domain configuration is correct
  * 2. DNS settings are validated
  * 3. SSL certificates are properly configured
- * 
+ *
  * This test follows TDD approach and will FAIL initially until domains are properly configured.
  */
 
-import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
-import https from 'https';
-import http from 'http';
 import dns from 'dns/promises';
+import http from 'http';
+import https from 'https';
 import { promisify } from 'util';
+
+import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 
 interface DomainTestConfig {
   domain: string;
@@ -40,13 +41,13 @@ describe('Custom Domain Setup Integration Tests', () => {
     {
       domain: 'cpaonweb.com',
       expectedBranch: 'main',
-      shouldRedirectToHttps: true
+      shouldRedirectToHttps: true,
     },
     {
       domain: 'staging.cpaonweb.com',
       expectedBranch: 'staging',
-      shouldRedirectToHttps: true
-    }
+      shouldRedirectToHttps: true,
+    },
   ];
 
   const timeout = 30000; // 30 seconds for network operations
@@ -65,17 +66,17 @@ describe('Custom Domain Setup Integration Tests', () => {
       // This test will FAIL initially until DNS is properly configured
       try {
         const records = await dns.resolve(domain, 'A');
-        
+
         // Validate that DNS records exist
         expect(records).toBeDefined();
         expect(records.length).toBeGreaterThan(0);
-        
+
         // Validate that records point to Cloudflare IP ranges (typically 104.x.x.x or 172.x.x.x)
         const cloudflareIPPattern = /^(104|172|188|203|198)\./;
         const hasCloudflareIP = records.some(ip => cloudflareIPPattern.test(ip));
-        
+
         expect(hasCloudflareIP).toBe(true);
-        
+
         console.log(`✅ DNS records for ${domain}:`, records);
       } catch (error) {
         console.error(`❌ DNS resolution failed for ${domain}:`, error);
@@ -88,7 +89,7 @@ describe('Custom Domain Setup Integration Tests', () => {
       try {
         // Try to resolve CNAME records (some domains might use CNAME instead of A records)
         const cnameRecords = await dns.resolve(domain, 'CNAME').catch(() => []);
-        
+
         if (cnameRecords.length > 0) {
           expect(cnameRecords[0]).toContain('pages.dev');
           console.log(`✅ CNAME record for ${domain}:`, cnameRecords[0]);
@@ -111,12 +112,12 @@ describe('Custom Domain Setup Integration Tests', () => {
           port: 443,
           method: 'GET',
           path: '/',
-          timeout: timeout
+          timeout,
         };
 
         const req = https.request(options, (res) => {
           const cert = res.socket.getPeerCertificate();
-          
+
           if (!cert || Object.keys(cert).length === 0) {
             reject(new Error(`No SSL certificate found for ${domain}`));
             return;
@@ -127,7 +128,7 @@ describe('Custom Domain Setup Integration Tests', () => {
             issuer: cert.issuer?.CN || 'Unknown',
             validFrom: cert.valid_from,
             validTo: cert.valid_to,
-            valid: cert.valid_to ? new Date(cert.valid_to) > new Date() : false
+            valid: cert.valid_to ? new Date(cert.valid_to) > new Date() : false,
           };
 
           try {
@@ -135,7 +136,7 @@ describe('Custom Domain Setup Integration Tests', () => {
             expect(certInfo.valid).toBe(true);
             expect(certInfo.subject).toContain(domain);
             expect(certInfo.issuer).toMatch(/(Let's Encrypt|Cloudflare|DigiCert)/i);
-            
+
             console.log(`✅ SSL Certificate for ${domain}:`, certInfo);
             resolve();
           } catch (error) {
@@ -165,8 +166,8 @@ describe('Custom Domain Setup Integration Tests', () => {
           port: 443,
           method: 'GET',
           path: '/',
-          timeout: timeout,
-          rejectUnauthorized: true // This will fail if certificate chain is invalid
+          timeout,
+          rejectUnauthorized: true, // This will fail if certificate chain is invalid
         };
 
         const req = https.request(options, (res) => {
@@ -205,19 +206,19 @@ describe('Custom Domain Setup Integration Tests', () => {
           port: 80,
           method: 'GET',
           path: '/',
-          timeout: timeout
+          timeout,
         };
 
         const req = http.request(options, (res) => {
           try {
             // Expect redirect to HTTPS
             expect([301, 302, 308]).toContain(res.statusCode);
-            
+
             const location = res.headers.location;
             expect(location).toBeDefined();
             expect(location).toMatch(/^https:\/\//);
             expect(location).toContain(domain);
-            
+
             console.log(`✅ HTTP to HTTPS redirect working for ${domain}: ${res.statusCode} -> ${location}`);
             resolve();
           } catch (error) {
@@ -249,15 +250,15 @@ describe('Custom Domain Setup Integration Tests', () => {
           port: 443,
           method: 'GET',
           path: '/',
-          timeout: timeout,
+          timeout,
           headers: {
-            'User-Agent': 'Custom-Domain-Integration-Test/1.0'
-          }
+            'User-Agent': 'Custom-Domain-Integration-Test/1.0',
+          },
         };
 
         const req = https.request(options, (res) => {
           let data = '';
-          
+
           res.on('data', (chunk) => {
             data += chunk;
           });
@@ -266,11 +267,11 @@ describe('Custom Domain Setup Integration Tests', () => {
             try {
               // Expect successful response
               expect(res.statusCode).toBe(200);
-              
+
               // Expect HTML content (basic validation that it's serving the Next.js app)
               expect(data).toContain('</html>');
               expect(data.length).toBeGreaterThan(100); // Basic content length check
-              
+
               console.log(`✅ ${domain} is accessible and serving content (${data.length} bytes)`);
               resolve();
             } catch (error) {
@@ -301,25 +302,25 @@ describe('Custom Domain Setup Integration Tests', () => {
           port: 443,
           method: 'HEAD', // HEAD request for headers only
           path: '/',
-          timeout: timeout
+          timeout,
         };
 
         const req = https.request(options, (res) => {
           try {
             const headers = res.headers;
-            
+
             // Check for basic security headers
             expect(headers['strict-transport-security']).toBeDefined();
-            
+
             // Cloudflare typically adds these headers
             expect(headers['cf-ray']).toBeDefined();
             expect(headers.server).toMatch(/(cloudflare|nginx)/i);
-            
+
             console.log(`✅ Security headers present for ${domain}`);
             console.log('  - HSTS:', headers['strict-transport-security']);
             console.log('  - Server:', headers.server);
             console.log('  - CF-Ray:', headers['cf-ray']);
-            
+
             resolve();
           } catch (error) {
             reject(error);
@@ -345,10 +346,10 @@ describe('Custom Domain Setup Integration Tests', () => {
     test('staging subdomain should serve different content from main domain', async () => {
       // This test validates that staging.cpaonweb.com serves staging branch content
       // and main domain serves production content
-      
+
       const productionDomain = 'cpaonweb.com';
       const stagingDomain = 'staging.cpaonweb.com';
-      
+
       const getPageContent = (domain: string): Promise<string> => {
         return new Promise((resolve, reject) => {
           const options = {
@@ -356,12 +357,12 @@ describe('Custom Domain Setup Integration Tests', () => {
             port: 443,
             method: 'GET',
             path: '/',
-            timeout: timeout
+            timeout,
           };
 
           const req = https.request(options, (res) => {
             let data = '';
-            
+
             res.on('data', (chunk) => {
               data += chunk;
             });
@@ -385,7 +386,7 @@ describe('Custom Domain Setup Integration Tests', () => {
       try {
         const [productionContent, stagingContent] = await Promise.all([
           getPageContent(productionDomain),
-          getPageContent(stagingDomain)
+          getPageContent(stagingDomain),
         ]);
 
         // Both should be accessible
@@ -395,10 +396,10 @@ describe('Custom Domain Setup Integration Tests', () => {
         console.log(`✅ Both domains are serving content`);
         console.log(`  - Production (${productionDomain}): ${productionContent.length} bytes`);
         console.log(`  - Staging (${stagingDomain}): ${stagingContent.length} bytes`);
-        
+
         // Note: Content might be identical if both branches have same content
         // This is acceptable - the test validates both domains are accessible
-        
+
       } catch (error) {
         throw new Error(`Branch alias configuration test failed: ${error}`);
       }
