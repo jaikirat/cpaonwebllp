@@ -72,6 +72,12 @@
     ".next",
     "out",
     "dist",
-    "build"
+    "build",
+    "tests/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.spec.js"
   ]
 }
