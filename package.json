@@ -2,6 +2,7 @@
   "name": "cpaonwebllp",
   "version": "0.1.0",
   "description": "Next.js TypeScript project with Cloudflare Pages deployment pipeline for CPA On Web LLP",
+  "type": "module",
   "private": true,
   "homepage": "https://cpaonweb.com",
   "engines": {
@@ -12,7 +13,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
