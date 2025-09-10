@@ -23,7 +23,14 @@
       "Bash(npx tsc:*)",
       "Bash(npx next lint:*)",
       "Bash(npx eslint:*)",
-      "Bash(npx next build:*)"
+      "Bash(npx next build:*)",
+      "Bash(gh:*)",
+      "Bash(git fetch:*)",
+      "Bash(winget:*)",
+      "Bash(refreshenv)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" --version)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth login)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)"
     ],
     "deny": [],
     "ask": []
