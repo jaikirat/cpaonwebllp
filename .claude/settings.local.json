@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(scripts/create-new-feature.sh:*)",
+      "Bash(scripts/setup-plan.sh:*)",
+      "Bash(scripts/check-task-prerequisites.sh:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(timeout 10s npm run dev)",
+      "Bash(npx @next/codemod@canary next-lint-to-eslint-cli:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(test:*)",
+      "Bash(npx jest:*)",
+      "Bash(./node_modules/.bin/jest:*)",
+      "Bash(.\\node_modules\\.bin\\jest:*)",
+      "Bash(powershell:*)",
+      "Bash(cmd /c:*)",
+      "Bash(findstr:*)",
+      "Bash(npx ts-jest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx next build:*)",
+      "Bash(gh:*)",
+      "Bash(git fetch:*)",
+      "Bash(winget:*)",
+      "Bash(refreshenv)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" --version)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth login)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

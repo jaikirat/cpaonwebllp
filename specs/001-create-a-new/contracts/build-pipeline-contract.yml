@@ -1,0 +1,142 @@
+# Build Pipeline Contract
+# Defines the expected behavior of the CI/CD pipeline
+
+version: '1.0'
+name: 'Next.js TypeScript Build Pipeline'
+description: 'Contract specification for automated build and deployment pipeline'
+
+# Build Process Contract
+build_process:
+  trigger:
+    type: 'git_push'
+    branches: ['main', 'staging', 'feature/*']
+    
+  requirements:
+    node_version: '>=18.0.0'
+    npm_version: '>=8.0.0'
+    
+  build_steps:
+    - name: 'install_dependencies'
+      command: 'npm ci'
+      success_criteria:
+        - exit_code: 0
+        - node_modules_exists: true
+        
+    - name: 'type_check'
+      command: 'npm run type-check'
+      success_criteria:
+        - exit_code: 0
+        - no_typescript_errors: true
+        
+    - name: 'lint_check'  
+      command: 'npm run lint'
+      success_criteria:
+        - exit_code: 0
+        - no_lint_errors: true
+        
+    - name: 'build_production'
+      command: 'npm run build'
+      success_criteria:
+        - exit_code: 0
+        - build_directory_exists: '.next'
+        - static_files_generated: true
+        
+  outputs:
+    - name: 'build_artifacts'
+      path: '.next'
+      required: true
+      
+    - name: 'static_exports'
+      path: '.next/static'
+      required: true
+
+# Deployment Contract
+deployment:
+  environments:
+    production:
+      branch: 'main'
+      url_pattern: 'https://cpaonweb.com'
+      auto_deploy: true
+      
+    staging:
+      branch: 'staging'  
+      url_pattern: 'https://staging.cpaonweb.com'
+      auto_deploy: true
+      
+    preview:
+      branch: 'feature/*'
+      url_pattern: 'https://[commit-hash].cpaonweb.pages.dev'
+      auto_deploy: true
+      ephemeral: true
+      
+  success_criteria:
+    - http_status: 200
+    - response_time: '<3s'
+    - content_type: 'text/html'
+    - no_javascript_errors: true
+
+# Failure Handling Contract  
+error_handling:
+  build_failure:
+    actions:
+      - 'generate_detailed_logs'
+      - 'notify_via_github_status'
+      - 'prevent_deployment'
+      
+  deployment_failure:
+    actions:
+      - 'maintain_previous_deployment'
+      - 'generate_failure_report'
+      - 'alert_administrators'
+      
+  rollback_procedure:
+    trigger: 'manual_action'
+    method: 'promote_previous_deployment'
+    fallback: 'git_revert_and_redeploy'
+    
+# Status Reporting Contract
+status_reporting:
+  build_status:
+    pending: 'Build in progress'
+    success: 'Build completed successfully'  
+    failure: 'Build failed - check logs'
+    
+  deployment_status:
+    deploying: 'Deployment in progress'
+    success: 'Deployed successfully'
+    failure: 'Deployment failed'
+    
+  notification_channels:
+    - 'github_commit_status'
+    - 'github_pr_checks'
+    - 'cloudflare_dashboard'
+
+# Performance Contract
+performance:
+  build_time:
+    maximum: '5 minutes'
+    typical: '2 minutes'
+    
+  deployment_time:  
+    maximum: '2 minutes'
+    typical: '30 seconds'
+    
+  cache_behavior:
+    node_modules: 'cache_between_builds'
+    next_cache: 'cache_between_builds'
+    
+# Security Contract
+security:
+  environment_variables:
+    - name: 'NODE_ENV'
+      required: true
+      values: ['development', 'production']
+      
+    - name: 'NEXT_PUBLIC_*'
+      pattern: 'NEXT_PUBLIC_[A-Z_]+'
+      exposure: 'client_side'
+      
+  secrets_management:
+    - 'no_secrets_in_repository'
+    - 'use_cloudflare_environment_variables'
+    - 'no_hardcoded_api_keys'
