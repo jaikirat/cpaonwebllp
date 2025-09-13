@@ -412,7 +412,9 @@ export function ThemeProvider({
    * Initialize theme system
    */
   useEffect(() => {
-    if (!isBrowser() || isInitializedRef.current || forcedTheme) return;
+    if (!isBrowser() || isInitializedRef.current || forcedTheme) {
+      return undefined;
+    }
 
     try {
       // Apply initial theme

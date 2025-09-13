@@ -57,7 +57,13 @@
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 6 --merge)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 6 --admin --merge)",
       "Bash(npx tailwindcss:*)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(dir)",
+      "Bash(dir tests)",
+      "Bash(dir testscomponents)",
+      "Bash(cat:*)",
+      "Bash(sed:*)",
+      "Bash(del test-button.tsx)"
     ],
     "deny": [],
     "ask": []

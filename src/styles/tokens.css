@@ -41,6 +41,7 @@
   --primitive-gray-500: #6b7280;
   --primitive-gray-600: #4b5563;
   --primitive-gray-700: #374151;
+  --primitive-gray-750: #2d3748; /* Added for dark theme surface variations */
   --primitive-gray-800: #1f2937;
   --primitive-gray-900: #111827;
   --primitive-gray-950: #030712;

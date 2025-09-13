@@ -4,6 +4,24 @@
 /* Import Tailwind CSS */
 @import "tailwindcss";
 
+/* Add missing gray-750 token for dark theme */
+:root {
+  --primitive-gray-750: #2d3748; /* Between gray-700 and gray-800 */
+}
+
+/* Ensure smooth theme transitions */
+* {
+  transition: background-color var(--duration-normal) var(--easing-smooth),
+              color var(--duration-normal) var(--easing-smooth),
+              border-color var(--duration-normal) var(--easing-smooth),
+              box-shadow var(--duration-normal) var(--easing-smooth);
+}
+
+/* Disable transitions during theme changes to prevent flashing */
+[data-theme-transitioning] * {
+  transition: none !important;
+}
+
 @theme {
   /* Primary colors using our design tokens */
   --color-primary-50: var(--primitive-blue-50);
@@ -132,45 +150,136 @@
     box-sizing: border-box;
   }
 
-  body {
-    background-color: var(--color-background);
-    color: var(--color-text);
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
+  /* Root element setup */
   html {
     scroll-behavior: smooth;
+    /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+    /* Better text rendering */
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Focus styles for accessibility */
+  /* Body setup with design system integration */
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Prevent text selection on UI elements */
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+  }
+
+  /* Ensure proper stacking context */
+  #__next {
+    isolation: isolate;
+  }
+
+  /* Enhanced focus styles for accessibility */
+  *:focus {
+    outline: none;
+  }
+
   *:focus-visible {
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
   }
 
-  /* Improve text rendering */
+  /* High contrast theme focus enhancement */
+  [data-theme="high-contrast"] *:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* Typography improvements with design system integration */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+    margin: 0;
+    font-family: var(--font-family-sans);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    color: var(--color-text);
   }
 
-  /* Improve link accessibility */
+  /* Heading size hierarchy */
+  h1 {
+    font-size: var(--font-size-4xl);
+    line-height: var(--line-height-none);
+  }
+
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h4 {
+    font-size: var(--font-size-xl);
+  }
+
+  h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  h6 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Paragraph and text styles */
+  p {
+    margin: 0 0 var(--spacing-4) 0;
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text);
+  }
+
+  /* Remove margin from last paragraph */
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Enhanced link accessibility and design */
   a {
     color: var(--color-primary);
     text-decoration: none;
     transition: color var(--duration-normal) var(--easing-smooth);
+    border-radius: var(--border-radius-sm);
   }
 
   a:hover {
     color: var(--color-primary-hover);
     text-decoration: underline;
+    text-decoration-thickness: 2px;
     text-underline-offset: 4px;
+  }
+
+  a:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  /* High contrast theme link enhancement */
+  [data-theme="high-contrast"] a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 
   /* Remove default list styles when role is list */
@@ -179,7 +288,7 @@
     list-style: none;
   }
 
-  /* Improve image defaults */
+  /* Enhanced media element defaults */
   img,
   picture,
   video,
@@ -188,19 +297,132 @@
     display: block;
     max-width: 100%;
     height: auto;
+    border-radius: var(--border-radius);
   }
 
-  /* Improve table defaults */
+  /* SVG specific improvements */
+  svg {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  /* Improve image loading experience */
+  img {
+    background-color: var(--color-surface-secondary);
+  }
+
+  /* Enhanced table styling with design system */
   table {
+    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
+    background-color: var(--color-surface);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
   }
 
-  /* Improve box model defaults */
+  th,
+  td {
+    padding: var(--spacing-3) var(--spacing-4);
+    text-align: left;
+    border-bottom: var(--border-width-default) solid var(--color-border);
+  }
+
+  th {
+    background-color: var(--color-surface-secondary);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  /* Enhanced box model and form elements */
   *,
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  /* Form element improvements */
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* Button reset with design system base */
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  ::-moz-selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /* Scrollbar styling for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary);
+    border-radius: var(--border-radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-tertiary);
+  }
+
+  /* Firefox scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-secondary) var(--color-surface-secondary);
+  }
+
+  /* Ensure consistent line heights */
+  [role="button"],
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    line-height: 1;
+  }
+
+  /* Improve contrast in high contrast mode */
+  [data-theme="high-contrast"] * {
+    border-width: 2px;
+  }
+
+  [data-theme="high-contrast"] button,
+  [data-theme="high-contrast"] input,
+  [data-theme="high-contrast"] select,
+  [data-theme="high-contrast"] textarea {
+    border: 2px solid var(--color-border);
   }
 }
 
@@ -339,6 +561,7 @@
 }
 
 @layer utilities {
+  /* Typography utilities */
   .text-balance {
     text-wrap: balance;
   }
@@ -347,6 +570,7 @@
     text-wrap: pretty;
   }
 
+  /* Scrollbar utilities */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -363,5 +587,99 @@
 
   .scrollbar-default::-webkit-scrollbar {
     display: block;
+  }
+
+  /* Theme-aware utilities */
+  .theme-transition {
+    transition: background-color var(--duration-normal) var(--easing-smooth),
+                color var(--duration-normal) var(--easing-smooth),
+                border-color var(--duration-normal) var(--easing-smooth);
+  }
+
+  .no-transition {
+    transition: none !important;
+  }
+
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Focus utilities */
+  .focus-visible-only:focus {
+    outline: none;
+  }
+
+  .focus-visible-only:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* High contrast utilities */
+  .high-contrast-border {
+    border: var(--border-width-default) solid var(--color-border);
+  }
+
+  [data-theme="high-contrast"] .high-contrast-border {
+    border-width: 2px;
+  }
+
+  /* Layout utilities */
+  .full-width {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Print utilities */
+  @media print {
+    .print-hidden {
+      display: none !important;
+    }
+
+    .print-visible {
+      display: block !important;
+    }
+
+    * {
+      background: transparent !important;
+      color: black !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+  }
+
+  /* Reduced motion utilities */
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-reduce {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 }

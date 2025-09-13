@@ -51,11 +51,11 @@
 - [x] T015 Theme provider context implementation in src/components/theme-provider.tsx
 
 ## Phase 3.4: Integration
-- [ ] T016 Design system sandbox page in src/app/sandbox/page.tsx
-- [ ] T017 Component variant showcases in sandbox (all button variants, input states, card types)
-- [ ] T018 Theme switching controls in sandbox page
-- [ ] T019 Update root layout with theme provider in src/app/layout.tsx
-- [ ] T020 Global styles integration in src/app/globals.css
+- [x] T016 Design system sandbox page in src/app/sandbox/page.tsx
+- [x] T017 Component variant showcases in sandbox (all button variants, input states, card types)
+- [x] T018 Theme switching controls in sandbox page
+- [x] T019 Update root layout with theme provider in src/app/layout.tsx
+- [x] T020 Global styles integration in src/app/globals.css
 
 ## Phase 3.5: Polish
 - [ ] T021 [P] Visual regression tests with Playwright in tests/visual/components.spec.ts
