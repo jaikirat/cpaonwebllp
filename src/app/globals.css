@@ -1,51 +1,148 @@
+/* Import design tokens first */
+@import "../styles/tokens.css";
+
+/* Import Tailwind CSS */
 @import "tailwindcss";
 
+/* Add missing gray-750 token for dark theme */
+:root {
+  --primitive-gray-750: #2d3748; /* Between gray-700 and gray-800 */
+}
+
+/* Ensure smooth theme transitions */
+* {
+  transition: background-color var(--duration-normal) var(--easing-smooth),
+              color var(--duration-normal) var(--easing-smooth),
+              border-color var(--duration-normal) var(--easing-smooth),
+              box-shadow var(--duration-normal) var(--easing-smooth);
+}
+
+/* Disable transitions during theme changes to prevent flashing */
+[data-theme-transitioning] * {
+  transition: none !important;
+}
+
 @theme {
-  --color-primary-50: oklch(98% 0.01 225);
-  --color-primary-100: oklch(95% 0.02 225);
-  --color-primary-200: oklch(88% 0.04 225);
-  --color-primary-300: oklch(76% 0.08 225);
-  --color-primary-400: oklch(65% 0.12 225);
-  --color-primary-500: oklch(58% 0.14 225);
-  --color-primary-600: oklch(51% 0.13 225);
-  --color-primary-700: oklch(42% 0.12 225);
-  --color-primary-800: oklch(33% 0.10 225);
-  --color-primary-900: oklch(26% 0.08 225);
-  --color-primary-950: oklch(18% 0.05 225);
+  /* Primary colors using our design tokens */
+  --color-primary-50: var(--primitive-blue-50);
+  --color-primary-100: var(--primitive-blue-100);
+  --color-primary-200: var(--primitive-blue-200);
+  --color-primary-300: var(--primitive-blue-300);
+  --color-primary-400: var(--primitive-blue-400);
+  --color-primary-500: var(--primitive-blue-500);
+  --color-primary-600: var(--primitive-blue-600);
+  --color-primary-700: var(--primitive-blue-700);
+  --color-primary-800: var(--primitive-blue-800);
+  --color-primary-900: var(--primitive-blue-900);
+  --color-primary-950: var(--primitive-blue-950);
 
-  --color-secondary-50: oklch(99% 0.005 225);
-  --color-secondary-100: oklch(97% 0.01 225);
-  --color-secondary-200: oklch(93% 0.02 225);
-  --color-secondary-300: oklch(84% 0.04 225);
-  --color-secondary-400: oklch(71% 0.06 225);
-  --color-secondary-500: oklch(58% 0.08 225);
-  --color-secondary-600: oklch(46% 0.08 225);
-  --color-secondary-700: oklch(36% 0.08 225);
-  --color-secondary-800: oklch(28% 0.06 225);
-  --color-secondary-900: oklch(22% 0.04 225);
-  --color-secondary-950: oklch(15% 0.02 225);
+  /* Secondary colors using our design tokens */
+  --color-secondary-50: var(--primitive-gray-50);
+  --color-secondary-100: var(--primitive-gray-100);
+  --color-secondary-200: var(--primitive-gray-200);
+  --color-secondary-300: var(--primitive-gray-300);
+  --color-secondary-400: var(--primitive-gray-400);
+  --color-secondary-500: var(--primitive-gray-500);
+  --color-secondary-600: var(--primitive-gray-600);
+  --color-secondary-700: var(--primitive-gray-700);
+  --color-secondary-800: var(--primitive-gray-800);
+  --color-secondary-900: var(--primitive-gray-900);
+  --color-secondary-950: var(--primitive-gray-950);
 
-  --font-family-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* shadcn/ui CSS Variables - Integrated with Design Tokens */
+  /* Light theme (default) */
+  --background: var(--color-background);
+  --foreground: var(--color-text);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text-on-surface);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-surface-secondary);
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-surface-tertiary);
+  --muted-foreground: var(--color-text-secondary);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-error-foreground);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-focus-ring);
+  --radius: var(--border-radius-md);
 
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
+  /* Font families from design tokens */
+  --font-family-sans: var(--font-family-sans);
+  --font-family-serif: var(--font-family-serif);
+  --font-family-mono: var(--font-family-mono);
 
-  --radius-sm: 0.125rem;
-  --radius: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-full: 9999px;
+  /* Breakpoints from design tokens */
+  --breakpoint-sm: var(--breakpoint-sm);
+  --breakpoint-md: var(--breakpoint-md);
+  --breakpoint-lg: var(--breakpoint-lg);
+  --breakpoint-xl: var(--breakpoint-xl);
+  --breakpoint-2xl: var(--breakpoint-2xl);
 
-  --shadow-soft: 0 2px 15px -3px rgb(0 0 0 / 0.07), 0 10px 20px -2px rgb(0 0 0 / 0.04);
-  --shadow-medium: 0 4px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
-  --shadow-strong: 0 10px 40px -10px rgb(0 0 0 / 0.15), 0 4px 10px -2px rgb(0 0 0 / 0.05);
+  /* Border radius from design tokens */
+  --radius-sm: var(--border-radius-sm);
+  --radius: var(--border-radius);
+  --radius-md: var(--border-radius-md);
+  --radius-lg: var(--border-radius-lg);
+  --radius-xl: var(--border-radius-xl);
+  --radius-2xl: var(--border-radius-2xl);
+  --radius-full: var(--border-radius-full);
+
+  /* Shadows from design tokens */
+  --shadow-soft: var(--shadow-sm);
+  --shadow-medium: var(--shadow-md);
+  --shadow-strong: var(--shadow-lg);
+}
+
+/* Dark theme overrides for shadcn/ui variables */
+[data-theme="dark"] {
+  --background: var(--color-background);
+  --foreground: var(--color-text);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text-on-surface);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-surface-secondary);
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-surface-tertiary);
+  --muted-foreground: var(--color-text-secondary);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-error-foreground);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-focus-ring);
+}
+
+/* High contrast theme overrides for shadcn/ui variables */
+[data-theme="high-contrast"] {
+  --background: var(--color-background);
+  --foreground: var(--color-text);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text-on-surface);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-surface-secondary);
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-surface-tertiary);
+  --muted-foreground: var(--color-text-secondary);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-error-foreground);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-focus-ring);
 }
 
 @layer base {
@@ -53,45 +150,136 @@
     box-sizing: border-box;
   }
 
-  body {
-    background-color: white;
-    color: var(--color-secondary-900);
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
+  /* Root element setup */
   html {
     scroll-behavior: smooth;
+    /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+    /* Better text rendering */
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Focus styles for accessibility */
+  /* Body setup with design system integration */
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Prevent text selection on UI elements */
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+  }
+
+  /* Ensure proper stacking context */
+  #__next {
+    isolation: isolate;
+  }
+
+  /* Enhanced focus styles for accessibility */
+  *:focus {
+    outline: none;
+  }
+
   *:focus-visible {
-    outline: 2px solid var(--color-primary-500);
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
   }
 
-  /* Improve text rendering */
+  /* High contrast theme focus enhancement */
+  [data-theme="high-contrast"] *:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* Typography improvements with design system integration */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+    margin: 0;
+    font-family: var(--font-family-sans);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    color: var(--color-text);
   }
 
-  /* Improve link accessibility */
+  /* Heading size hierarchy */
+  h1 {
+    font-size: var(--font-size-4xl);
+    line-height: var(--line-height-none);
+  }
+
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h4 {
+    font-size: var(--font-size-xl);
+  }
+
+  h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  h6 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Paragraph and text styles */
+  p {
+    margin: 0 0 var(--spacing-4) 0;
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text);
+  }
+
+  /* Remove margin from last paragraph */
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Enhanced link accessibility and design */
   a {
-    color: var(--color-primary-600);
+    color: var(--color-primary);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--duration-normal) var(--easing-smooth);
+    border-radius: var(--border-radius-sm);
   }
 
   a:hover {
-    color: var(--color-primary-700);
+    color: var(--color-primary-hover);
     text-decoration: underline;
+    text-decoration-thickness: 2px;
     text-underline-offset: 4px;
+  }
+
+  a:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  /* High contrast theme link enhancement */
+  [data-theme="high-contrast"] a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 
   /* Remove default list styles when role is list */
@@ -100,7 +288,7 @@
     list-style: none;
   }
 
-  /* Improve image defaults */
+  /* Enhanced media element defaults */
   img,
   picture,
   video,
@@ -109,19 +297,132 @@
     display: block;
     max-width: 100%;
     height: auto;
+    border-radius: var(--border-radius);
   }
 
-  /* Improve table defaults */
+  /* SVG specific improvements */
+  svg {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  /* Improve image loading experience */
+  img {
+    background-color: var(--color-surface-secondary);
+  }
+
+  /* Enhanced table styling with design system */
   table {
+    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
+    background-color: var(--color-surface);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
   }
 
-  /* Improve box model defaults */
+  th,
+  td {
+    padding: var(--spacing-3) var(--spacing-4);
+    text-align: left;
+    border-bottom: var(--border-width-default) solid var(--color-border);
+  }
+
+  th {
+    background-color: var(--color-surface-secondary);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  /* Enhanced box model and form elements */
   *,
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  /* Form element improvements */
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* Button reset with design system base */
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  ::-moz-selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /* Scrollbar styling for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary);
+    border-radius: var(--border-radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-tertiary);
+  }
+
+  /* Firefox scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-secondary) var(--color-surface-secondary);
+  }
+
+  /* Ensure consistent line heights */
+  [role="button"],
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    line-height: 1;
+  }
+
+  /* Improve contrast in high contrast mode */
+  [data-theme="high-contrast"] * {
+    border-width: 2px;
+  }
+
+  [data-theme="high-contrast"] button,
+  [data-theme="high-contrast"] input,
+  [data-theme="high-contrast"] select,
+  [data-theme="high-contrast"] textarea {
+    border: 2px solid var(--color-border);
   }
 }
 
@@ -131,18 +432,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    border-radius: var(--button-border-radius);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--button-font-size-md);
+    font-weight: var(--button-font-weight);
+    transition: all var(--duration-normal) var(--easing-smooth);
     cursor: pointer;
     border: none;
     text-decoration: none;
   }
 
   .btn-base:focus-visible {
-    outline: 2px solid var(--color-primary-500);
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
 
@@ -152,54 +453,54 @@
   }
 
   .btn-primary {
-    background-color: var(--color-primary-600);
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
   }
 
   .btn-primary:hover {
-    background-color: var(--color-primary-700);
+    background-color: var(--color-primary-hover);
   }
 
   .btn-secondary {
-    background-color: var(--color-secondary-100);
-    color: var(--color-secondary-900);
-    border: 1px solid var(--color-secondary-200);
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text);
+    border: var(--border-width-default) solid var(--color-border);
   }
 
   .btn-secondary:hover {
-    background-color: var(--color-secondary-200);
+    background-color: var(--color-surface-hover);
   }
 
   /* Professional card styles */
   .card-base {
-    background-color: white;
-    border: 1px solid var(--color-secondary-200);
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    padding: 1.5rem;
+    background-color: var(--color-surface);
+    border: var(--card-border-width) solid var(--color-border);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    padding: var(--card-padding-md);
   }
 
   /* Professional form element styles */
   .input-base {
     display: flex;
-    height: 2.5rem;
+    height: var(--input-height-md);
     width: 100%;
-    border-radius: 0.375rem;
-    border: 1px solid var(--color-secondary-300);
-    background-color: white;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
+    border-radius: var(--input-border-radius);
+    border: var(--input-border-width) solid var(--color-border);
+    background-color: var(--color-surface);
+    padding: var(--spacing-2) var(--input-padding-x);
+    font-size: var(--input-font-size);
+    transition: all var(--duration-normal) var(--easing-smooth);
   }
 
   .input-base:focus {
     outline: none;
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 2px rgb(from var(--color-primary-500) r g b / 0.2);
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 2px var(--color-focus-ring);
   }
 
   .input-base::placeholder {
-    color: var(--color-secondary-400);
+    color: var(--color-text-tertiary);
   }
 
   .input-base:disabled {
@@ -209,57 +510,58 @@
 
   /* Professional section spacing */
   .section-padding {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: var(--spacing-16);
+    padding-bottom: var(--spacing-16);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: var(--breakpoint-md)) {
     .section-padding {
-      padding-top: 6rem;
-      padding-bottom: 6rem;
+      padding-top: var(--spacing-24);
+      padding-bottom: var(--spacing-24);
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: var(--breakpoint-lg)) {
     .section-padding {
-      padding-top: 8rem;
-      padding-bottom: 8rem;
+      padding-top: var(--spacing-32);
+      padding-bottom: var(--spacing-32);
     }
   }
 
   .container-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: var(--breakpoint-sm)) {
     .container-padding {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+      padding-left: var(--spacing-6);
+      padding-right: var(--spacing-6);
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: var(--breakpoint-lg)) {
     .container-padding {
-      padding-left: 2rem;
-      padding-right: 2rem;
+      padding-left: var(--spacing-8);
+      padding-right: var(--spacing-8);
     }
   }
 
   /* Professional link styles */
   .link-primary {
-    color: var(--color-primary-600);
+    color: var(--color-primary);
     text-underline-offset: 4px;
-    transition: color 0.2s ease;
+    transition: color var(--duration-normal) var(--easing-smooth);
   }
 
   .link-primary:hover {
-    color: var(--color-primary-700);
+    color: var(--color-primary-hover);
     text-decoration: underline;
   }
 }
 
 @layer utilities {
+  /* Typography utilities */
   .text-balance {
     text-wrap: balance;
   }
@@ -268,6 +570,7 @@
     text-wrap: pretty;
   }
 
+  /* Scrollbar utilities */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -284,5 +587,99 @@
 
   .scrollbar-default::-webkit-scrollbar {
     display: block;
+  }
+
+  /* Theme-aware utilities */
+  .theme-transition {
+    transition: background-color var(--duration-normal) var(--easing-smooth),
+                color var(--duration-normal) var(--easing-smooth),
+                border-color var(--duration-normal) var(--easing-smooth);
+  }
+
+  .no-transition {
+    transition: none !important;
+  }
+
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Focus utilities */
+  .focus-visible-only:focus {
+    outline: none;
+  }
+
+  .focus-visible-only:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* High contrast utilities */
+  .high-contrast-border {
+    border: var(--border-width-default) solid var(--color-border);
+  }
+
+  [data-theme="high-contrast"] .high-contrast-border {
+    border-width: 2px;
+  }
+
+  /* Layout utilities */
+  .full-width {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Print utilities */
+  @media print {
+    .print-hidden {
+      display: none !important;
+    }
+
+    .print-visible {
+      display: block !important;
+    }
+
+    * {
+      background: transparent !important;
+      color: black !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+  }
+
+  /* Reduced motion utilities */
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-reduce {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 }

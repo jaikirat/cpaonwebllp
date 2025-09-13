@@ -1,0 +1,99 @@
+{
+  "summary": {
+    "designSystemSize": 38184,
+    "themeProviderSize": 17692,
+    "utilsSize": 18565,
+    "totalSize": 74441,
+    "totalLines": 2883,
+    "totalComplexity": 145,
+    "compressionRatio": 3.82
+  },
+  "components": {
+    "button": {
+      "raw": 11113,
+      "gzipped": 3182,
+      "formatted": {
+        "raw": "10.9 KB",
+        "gzipped": "3.1 KB"
+      },
+      "lines": 408,
+      "complexity": 8,
+      "checksum": "ab1f350e52a963b405274df215b6eb7c"
+    },
+    "input": {
+      "raw": 15815,
+      "gzipped": 4206,
+      "formatted": {
+        "raw": "15.4 KB",
+        "gzipped": "4.1 KB"
+      },
+      "lines": 630,
+      "complexity": 17,
+      "checksum": "8b04916323a2df59cad2d97e73205fd3"
+    },
+    "card": {
+      "raw": 10180,
+      "gzipped": 2725,
+      "formatted": {
+        "raw": "9.9 KB",
+        "gzipped": "2.7 KB"
+      },
+      "lines": 469,
+      "complexity": 7,
+      "checksum": "8527be2c8bd1d1521ecf3861eef00006"
+    },
+    "label": {
+      "raw": 741,
+      "gzipped": 387,
+      "formatted": {
+        "raw": "741 B",
+        "gzipped": "387 B"
+      },
+      "lines": 24,
+      "complexity": 0,
+      "checksum": "e38238c1724c5ea014d9fa8927ab0d18"
+    }
+  },
+  "imports": {
+    "totalImports": 11,
+    "externalDependencies": [
+      "class-variance-authority",
+      "react",
+      "@radix-ui/react-label"
+    ],
+    "internalImports": 4,
+    "circularDependencies": true,
+    "dependencyTree": {
+      "button": [
+        "class-variance-authority",
+        "react",
+        "@/lib/utils"
+      ],
+      "input": [
+        "react",
+        "@/lib/utils"
+      ],
+      "card": [
+        "react",
+        "@/lib/utils"
+      ],
+      "label": [
+        "@radix-ui/react-label",
+        "class-variance-authority",
+        "react",
+        "@/lib/utils"
+      ]
+    }
+  },
+  "budgetCompliance": {
+    "designSystem": true,
+    "themeProvider": true,
+    "utils": true
+  },
+  "recommendations": [
+    "Consider optimizing input component - size approaching budget limit",
+    "Consider splitting input component - file is getting large",
+    "Consider optimizing card component - size approaching budget limit",
+    "Fix circular dependencies to improve tree-shaking effectiveness"
+  ]
+}
