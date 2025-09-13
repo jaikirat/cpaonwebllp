@@ -199,7 +199,6 @@ export function SandboxThemeControls() {
             <Button
               variant={theme === 'light' ? 'default' : 'outline'}
               size="sm"
-              startIcon={<SunIcon />}
               onClick={() => setTheme('light')}
               className={cn(
                 'transition-all',
@@ -212,7 +211,6 @@ export function SandboxThemeControls() {
             <Button
               variant={theme === 'dark' ? 'default' : 'outline'}
               size="sm"
-              startIcon={<MoonIcon />}
               onClick={() => setTheme('dark')}
               className={cn(
                 'transition-all',
@@ -225,7 +223,6 @@ export function SandboxThemeControls() {
             <Button
               variant={theme === 'system' ? 'default' : 'outline'}
               size="sm"
-              startIcon={<ComputerIcon />}
               onClick={() => setTheme('system')}
               className={cn(
                 'transition-all',
@@ -239,7 +236,6 @@ export function SandboxThemeControls() {
               <Button
                 variant={theme === 'high-contrast' ? 'default' : 'outline'}
                 size="sm"
-                startIcon={<HighContrastIcon />}
                 onClick={() => setTheme('high-contrast')}
                 className={cn(
                   'transition-all',
@@ -259,7 +255,6 @@ export function SandboxThemeControls() {
             <Button
               variant="secondary"
               size="sm"
-              startIcon={<SwapIcon />}
               onClick={toggleTheme}
             >
               Toggle Light/Dark
@@ -268,7 +263,6 @@ export function SandboxThemeControls() {
             <Button
               variant="secondary"
               size="sm"
-              startIcon={<CycleIcon />}
               onClick={cycleTheme}
             >
               Cycle All Themes
@@ -277,7 +271,6 @@ export function SandboxThemeControls() {
             <Button
               variant="outline"
               size="sm"
-              startIcon={<ResetIcon />}
               onClick={resetToSystem}
             >
               Reset to System
