@@ -1,4 +1,4 @@
-import { NavigationItem } from '@/types/layout';
+import type { NavigationItem } from '@/types/layout';
 
 /**
  * Primary Navigation Configuration
@@ -170,7 +170,7 @@ export const secondaryNavigation: NavigationItem[] = [
  */
 export function getFilteredNavigation(
   items: NavigationItem[],
-  isAuthenticated: boolean = false
+  isAuthenticated: boolean = false,
 ): NavigationItem[] {
   return items
     .filter(item => {
@@ -199,7 +199,7 @@ export function getFilteredNavigation(
  */
 export function findNavigationItemByHref(
   items: NavigationItem[],
-  href: string
+  href: string,
 ): NavigationItem | null {
   for (const item of items) {
     if (item.href === href) {
@@ -244,7 +244,7 @@ export function getBreadcrumbTrail(href: string): Array<{
     const pathParts = href.split('/').filter(Boolean);
 
     for (let i = 1; i < pathParts.length; i++) {
-      const partialPath = '/' + pathParts.slice(0, i).join('/');
+      const partialPath = `/${  pathParts.slice(0, i).join('/')}`;
       const parentItem = findNavigationItemByHref(allNavigation, partialPath);
 
       if (parentItem && parentItem.href !== href) {
@@ -259,7 +259,7 @@ export function getBreadcrumbTrail(href: string): Array<{
     // Add current page as active (non-clickable)
     segments.push({
       label: currentItem.label,
-      href: href,
+      href,
       isActive: true,
     });
   }

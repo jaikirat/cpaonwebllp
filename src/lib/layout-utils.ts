@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
 import type {
   NavigationItem,
   BreadcrumbPath,
@@ -26,7 +27,7 @@ export function cn(...inputs: ClassValue[]) {
  */
 export function getContainerClasses(
   variant: LayoutVariant = 'default',
-  className?: string
+  className?: string,
 ): string {
   const baseClasses = 'mx-auto px-4 sm:px-6 lg:px-8';
 
@@ -48,7 +49,7 @@ export function getResponsivePadding(padding: ResponsivePadding): string {
   return cn(
     `p-${padding.mobile}`,
     `sm:p-${padding.tablet}`,
-    `lg:p-${padding.desktop}`
+    `lg:p-${padding.desktop}`,
   );
 }
 
@@ -60,7 +61,7 @@ export function getResponsivePadding(padding: ResponsivePadding): string {
  */
 export function isNavigationItemActive(
   item: NavigationItem,
-  currentPath: string
+  currentPath: string,
 ): boolean {
   // Exact match
   if (item.href === currentPath) {
@@ -75,7 +76,7 @@ export function isNavigationItemActive(
   // Check children for active state
   if (item.children) {
     return item.children.some((child: NavigationItem) =>
-      isNavigationItemActive(child, currentPath)
+      isNavigationItemActive(child, currentPath),
     );
   }
 
@@ -94,12 +95,12 @@ export function getNavigationItemClasses(
   item: NavigationItem,
   currentPath: string,
   baseClasses: string = 'transition-colors hover:text-foreground/80',
-  activeClasses: string = 'text-foreground'
+  activeClasses: string = 'text-foreground',
 ): string {
   const isActive = isNavigationItemActive(item, currentPath);
   return cn(
     baseClasses,
-    isActive ? activeClasses : 'text-foreground/60'
+    isActive ? activeClasses : 'text-foreground/60',
   );
 }
 
@@ -111,7 +112,7 @@ export function getNavigationItemClasses(
  */
 export function generateBreadcrumbPath(
   pathname: string,
-  navigationItems: NavigationItem[]
+  navigationItems: NavigationItem[],
 ): BreadcrumbPath {
   // Check if homepage
   const isHomePage = pathname === '/';
@@ -145,7 +146,8 @@ export function generateBreadcrumbPath(
 
     // Find navigation item for this path
     const navItem = findNavigationItemByPath(navigationItems, currentPath);
-    const label = navItem?.label || formatPathSegment(pathParts[i]);
+    const pathSegment = pathParts[i];
+    const label = navItem?.label || (pathSegment ? formatPathSegment(pathSegment) : 'Page');
 
     segments.push({
       label,
@@ -173,7 +175,7 @@ export function generateBreadcrumbPath(
  */
 function findNavigationItemByPath(
   items: NavigationItem[],
-  path: string
+  path: string,
 ): NavigationItem | null {
   for (const item of items) {
     if (item.href === path) {
@@ -234,7 +236,7 @@ export function getCurrentBreakpoint(
     mobile: 640,
     tablet: 768,
     desktop: 1024,
-  }
+  },
 ): 'mobile' | 'tablet' | 'desktop' {
   if (width < breakpoints.mobile) {
     return 'mobile';
@@ -253,13 +255,13 @@ export function getCurrentBreakpoint(
  */
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
 
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(null, args), wait);
+    timeout = setTimeout(() => func(...args), wait);
   };
 }
 
@@ -289,7 +291,7 @@ export function getSkipLinkProps(targetId: string = 'main-content') {
     className: cn(
       'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4',
       'z-50 bg-background border border-border rounded px-4 py-2',
-      'text-foreground underline transition-all'
+      'text-foreground underline transition-all',
     ),
     children: 'Skip to main content',
   };
@@ -303,7 +305,7 @@ export function getSkipLinkProps(targetId: string = 'main-content') {
  */
 export function getNavigationAriaAttributes(
   label: string,
-  current: boolean = false
+  current: boolean = false,
 ) {
   return {
     'aria-label': label,
@@ -326,7 +328,7 @@ export function generateId(prefix: string = 'layout'): string {
  * @returns Validation errors (empty array if valid)
  */
 export function validateNavigationStructure(
-  items: NavigationItem[]
+  items: NavigationItem[],
 ): string[] {
   const errors: string[] = [];
   const seenIds = new Set<string>();

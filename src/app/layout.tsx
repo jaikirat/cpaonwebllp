@@ -2,7 +2,15 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import './globals.css';
+import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
+import { LayoutContainer } from '@/components/layout/LayoutContainer';
+import { MobileNavigation } from '@/components/layout/MobileNavigation';
 import { ThemeProvider } from '@/components/theme-provider';
+import { primaryNavigation, secondaryNavigation } from '@/config/navigation';
+import { BreadcrumbProvider } from '@/providers/BreadcrumbProvider';
+import { NavigationProvider } from '@/providers/NavigationProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -37,7 +45,32 @@ export default function RootLayout({
           enableSystem
           availableThemes={['light', 'dark', 'high-contrast', 'system']}
         >
-          {children}
+          <NavigationProvider>
+            <BreadcrumbProvider>
+              {/* Main Layout Structure */}
+              <div className="relative flex min-h-screen flex-col">
+                {/* Header Navigation */}
+                <Header navigation={primaryNavigation} />
+
+                {/* Mobile Navigation */}
+                <MobileNavigation navigation={primaryNavigation} />
+
+                {/* Main Content Area */}
+                <main id="main-content" className="flex-1">
+                  <LayoutContainer>
+                    {/* Breadcrumb Navigation */}
+                    <Breadcrumbs className="mb-6" />
+
+                    {/* Page Content */}
+                    {children}
+                  </LayoutContainer>
+                </main>
+
+                {/* Footer */}
+                <Footer navigation={secondaryNavigation} />
+              </div>
+            </BreadcrumbProvider>
+          </NavigationProvider>
         </ThemeProvider>
       </body>
     </html>
