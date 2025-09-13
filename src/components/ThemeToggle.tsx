@@ -28,7 +28,7 @@ export default function ThemeToggle() {
     const themes: ResolvedTheme[] = ['light', 'dark', 'high-contrast'];
     const currentIndex = themes.indexOf(theme);
     const nextIndex = (currentIndex + 1) % themes.length;
-    const nextTheme = themes[nextIndex]!; // Safe since we're using modulo
+    const nextTheme = themes[nextIndex] as ResolvedTheme; // Safe since we're using modulo
 
     setTheme(nextTheme);
     setStoredTheme(nextTheme);
