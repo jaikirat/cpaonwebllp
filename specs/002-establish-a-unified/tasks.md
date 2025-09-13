@@ -29,26 +29,26 @@
 - Include exact file paths in descriptions
 
 ## Phase 3.1: Setup
-- [ ] T001 Create design token CSS variables in src/styles/tokens.css
-- [ ] T002 Configure Tailwind CSS to reference design tokens in tailwind.config.ts
-- [ ] T003 Create utility functions for theme management in src/lib/utils.ts
-- [ ] T004 Install and configure shadcn/ui and Radix UI dependencies
+- [x] T001 Create design token CSS variables in src/styles/tokens.css
+- [x] T002 Configure Tailwind CSS to reference design tokens in tailwind.config.ts
+- [x] T003 Create utility functions for theme management in src/lib/utils.ts
+- [x] T004 Install and configure shadcn/ui and Radix UI dependencies
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-- [ ] T005 [P] Button component contract test in tests/components/button.test.tsx
-- [ ] T006 [P] Input component contract test in tests/components/input.test.tsx
-- [ ] T007 [P] Card component contract test in tests/components/card.test.tsx
-- [ ] T008 [P] Theme switching integration test in tests/integration/theme-switching.test.tsx
-- [ ] T009 [P] Accessibility compliance test in tests/integration/accessibility.test.tsx
-- [ ] T010 [P] Design token usage test in tests/integration/token-consistency.test.tsx
+- [x] T005 [P] Button component contract test in tests/components/button.test.tsx
+- [x] T006 [P] Input component contract test in tests/components/input.test.tsx
+- [x] T007 [P] Card component contract test in tests/components/card.test.tsx
+- [x] T008 [P] Theme switching integration test in tests/integration/theme-switching.test.tsx
+- [x] T009 [P] Accessibility compliance test in tests/integration/accessibility.test.tsx
+- [x] T010 [P] Design token usage test in tests/integration/token-consistency.test.tsx
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T011 [P] Button component implementation in src/components/ui/button.tsx
-- [ ] T012 [P] Input component implementation in src/components/ui/input.tsx
-- [ ] T013 [P] Card component implementation with Header, Content, Footer in src/components/ui/card.tsx
-- [ ] T014 Component index exports in src/components/ui/index.ts
-- [ ] T015 Theme provider context implementation in src/components/theme-provider.tsx
+- [x] T011 [P] Button component implementation in src/components/ui/button.tsx
+- [x] T012 [P] Input component implementation in src/components/ui/input.tsx
+- [x] T013 [P] Card component implementation with Header, Content, Footer in src/components/ui/card.tsx
+- [x] T014 Component index exports in src/components/ui/index.ts
+- [x] T015 Theme provider context implementation in src/components/theme-provider.tsx
 
 ## Phase 3.4: Integration
 - [ ] T016 Design system sandbox page in src/app/sandbox/page.tsx
