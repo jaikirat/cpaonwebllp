@@ -536,7 +536,7 @@ export function getThemeConfig<T>(config: {
  * @param wait Wait time in milliseconds
  * @returns Debounced function
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number,
 ): (...args: Parameters<T>) => void {
@@ -575,10 +575,10 @@ export function getAvailableThemes(): Theme[] {
  * @param context Additional error context
  * @returns Error with theme context
  */
-export function createThemeError(message: string, context?: Record<string, any>): Error {
+export function createThemeError(message: string, context?: Record<string, unknown>): Error {
   const error = new Error(`Theme Error: ${message}`);
   if (context) {
-    (error as any).context = context;
+    (error as Error & { context?: Record<string, unknown> }).context = context;
   }
   return error;
 }

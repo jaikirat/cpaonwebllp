@@ -156,7 +156,7 @@ export function MobileNavigation({
         {/* Render children if expanded */}
         {hasChildren && isExpanded && (
           <div className="space-y-1">
-            {item.children!.map((childItem) =>
+            {item.children?.map((childItem) =>
               renderNavigationItem(childItem, level + 1),
             )}
           </div>

@@ -49,8 +49,8 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   }, [pathname]);
 
   // Handle window resize for responsive breakpoints
-  const handleResize = useCallback(
-    debounce(() => {
+  const handleResize = useCallback(() => {
+    const debouncedResize = debounce(() => {
       if (typeof window !== 'undefined') {
         const newBreakpoint = getCurrentBreakpoint(window.innerWidth);
         setCurrentBreakpoint(newBreakpoint);
@@ -60,9 +60,10 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
           setIsMobileMenuOpen(false);
         }
       }
-    }, 100),
-    [isMobileMenuOpen],
-  );
+    }, 100);
+
+    debouncedResize();
+  }, [isMobileMenuOpen]);
 
   // Set up resize listener
   useEffect(() => {
