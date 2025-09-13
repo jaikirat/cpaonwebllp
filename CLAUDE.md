@@ -12,7 +12,8 @@
 **Core Technologies:**
 - **Next.js 14.x**: React framework with App Router
 - **TypeScript 5.x**: Type-safe JavaScript development
-- **Tailwind CSS**: Utility-first CSS framework
+- **Tailwind CSS**: Utility-first CSS framework with design tokens
+- **shadcn/ui + Radix UI**: Accessible component primitives
 - **ESLint**: Code linting and quality checks
 
 **Infrastructure:**
@@ -21,22 +22,28 @@
 - **Node.js 18+**: Runtime environment
 - **npm**: Package management
 
+**Testing:**
+- **Jest**: Unit testing framework
+- **React Testing Library**: Component testing utilities
+- **Playwright**: End-to-end testing
+
 ## Project Structure
 
 ```
 cpaonweb-project/
 ├── src/
-│   └── app/                 # Next.js App Router directory
-│       ├── layout.tsx       # Root layout component
-│       ├── page.tsx         # Home page component
-│       └── globals.css      # Global styles
+│   ├── app/                 # Next.js App Router directory
+│   │   ├── layout.tsx       # Root layout component
+│   │   ├── page.tsx         # Home page component
+│   │   ├── sandbox/         # Component preview page
+│   │   └── globals.css      # Global styles
+│   └── components/
+│       └── ui/              # Design system components
 ├── public/                  # Static assets
 ├── specs/                   # Feature specifications and planning
-│   └── 001-create-a-new/   # Current feature implementation
 ├── package.json            # Dependencies and scripts
 ├── tsconfig.json           # TypeScript configuration
-├── next.config.js          # Next.js configuration
-├── tailwind.config.ts      # Tailwind CSS configuration
+├── tailwind.config.ts      # Tailwind CSS with design tokens
 └── .eslintrc.json         # ESLint configuration
 ```
 
@@ -54,6 +61,8 @@ npm run build       # Production build
 npm run start       # Start production server
 npm run lint        # Run ESLint
 npm run type-check  # TypeScript compilation check
+npm run test        # Run Jest unit tests
+npm run test:e2e    # Run Playwright E2E tests
 ```
 
 ### Deployment Pipeline
@@ -63,29 +72,9 @@ npm run type-check  # TypeScript compilation check
 4. All deployments automatic via Cloudflare Pages
 
 ## Configuration Files
-
-### package.json Scripts
-```json
-{
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start", 
-    "lint": "next lint",
-    "type-check": "tsc --noEmit"
-  }
-}
-```
-
-### TypeScript Configuration
-- Strict mode enabled
-- App Router compatibility
-- Path aliases configured (@/*)
-
-### ESLint Configuration  
-- Next.js recommended rules
-- TypeScript integration
-- Automatic formatting support
+- **TypeScript**: Strict mode, App Router compatibility, path aliases (@/*)
+- **ESLint**: Next.js recommended rules with TypeScript integration
+- **Tailwind**: Design tokens via CSS custom properties
 
 ## Coding Standards
 
@@ -114,86 +103,58 @@ export default function Component({ title, children }: ComponentProps) {
 ```
 
 ### Styling Approach
-- Tailwind CSS utility classes preferred
+- Tailwind CSS utility classes with design tokens via CSS custom properties
+- shadcn/ui components for consistent UI patterns
 - Component-scoped CSS modules when needed
 - Responsive design mobile-first
 
 ## CI/CD Pipeline
-
-### Build Process
-1. **Install**: `npm ci`
-2. **Type Check**: `npm run type-check`
-3. **Lint**: `npm run lint`
-4. **Build**: `npm run build`
-5. **Deploy**: Cloudflare Pages deployment
-
-### Environment Variables
-- `NODE_ENV`: production/development
-- `NEXT_TELEMETRY_DISABLED`: 1
-- Custom variables as needed
-
-### Status Checks
-- build: Must pass for deployment
-- type-check: Must pass for protected branches
-- lint: Must pass for protected branches
+**Build Process**: npm ci → type-check → lint → build → Cloudflare Pages deployment
+**Status Checks**: build, type-check, lint must pass for protected branches
+**Environment**: NODE_ENV, NEXT_TELEMETRY_DISABLED=1
 
 ## Current Implementation Status
 
 ### Completed (Phase 0-1):
-- ✅ Project specifications and requirements analysis
-- ✅ Technical research and technology stack decisions  
-- ✅ Data model design and entity relationships
-- ✅ API contracts and pipeline specifications
-- ✅ Manual setup documentation
-- ✅ Feature documentation and troubleshooting guides
-- ✅ Quickstart guide for rapid deployment
+✅ Project specifications, technical research, data models, API contracts, manual setup documentation, feature documentation, quickstart guide, design system planning
 
 ### Next Steps (Phase 2-3):
-- 📋 Task breakdown and implementation planning (/tasks command)
-- 🚧 Repository initialization and Next.js project setup
-- 🔧 GitHub branch protection configuration
-- ☁️ Cloudflare Pages integration and deployment
-- 🧪 End-to-end workflow testing and validation
+Task breakdown, repository initialization, GitHub branch protection, Cloudflare Pages integration, end-to-end workflow testing
 
 ## Key Considerations for Claude Code
 
 ### When Working on This Project:
-1. **Always check TypeScript**: Run `npm run type-check` before commits
-2. **Maintain code quality**: ESLint rules are enforced via CI/CD
-3. **Follow branch protection**: Use PRs for main and staging branches
-4. **Test deployments**: Verify preview deployments work correctly
-5. **Document changes**: Update relevant documentation files
+1. Always check TypeScript: `npm run type-check` before commits
+2. Maintain code quality: ESLint rules enforced via CI/CD
+3. Follow branch protection: Use PRs for main and staging branches
+4. Test deployments: Verify preview deployments work correctly
 
-### Common Commands You May Need:
+### Common Commands:
 ```bash
-# Setup new feature branch
-git checkout -b feature/[feature-name]
-
-# Install dependencies after pulling changes
-npm install
-
-# Check for issues before pushing
-npm run type-check && npm run lint && npm run build
-
-# Create pull request (requires GitHub CLI)
-gh pr create --title "Feature title" --body "Description"
+git checkout -b feature/[name]  # Create feature branch
+npm run type-check && npm run lint && npm run build  # Pre-commit checks
+gh pr create --title "Title" --body "Description"    # Create PR
 ```
 
 ### File Locations for Quick Reference:
 - **Specifications**: `/specs/001-create-a-new/`
 - **Source Code**: `/src/app/`
+- **Design System**: `/src/components/ui/`
+- **Component Preview**: `/src/app/sandbox/`
 - **Configuration**: Root directory (package.json, tsconfig.json, etc.)
-- **Documentation**: `/specs/001-create-a-new/manual-setup.md` and `feature-documentation.md`
 
 ### Dependencies to Know About:
 - **Next.js**: Web application framework
 - **React**: Component library
 - **TypeScript**: Type system
-- **Tailwind CSS**: Styling framework
+- **Tailwind CSS**: Styling framework with design tokens
+- **shadcn/ui + Radix UI**: Accessible component primitives
+- **Jest + React Testing Library**: Testing framework
 - **ESLint**: Code linting
 
 ---
 
-**Last Updated**: 2025-09-10  
-**Feature Branch**: 001-create-a-new  
+**Last Updated**: 2025-09-13
+**Feature Branch**: 001-create-a-new
+**Recent Changes**: Added design system implementation details
 **Next Review**: After /tasks command execution

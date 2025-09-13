@@ -29,20 +29,27 @@
     "test:integration:node": "node --test tests/integration/*.test.js"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.2",
+    "lucide-react": "^0.544.0",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "@tailwindcss/postcss": "^4",
+    "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "@types/react": "^19",
-    "@types/node": "^20",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.2"
+    "typescript": "^5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/jest": "^29.5.14",
+    "@types/node-fetch": "^2.6.11",
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
@@ -54,7 +61,6 @@
     "jest-environment-node": "^29.7.0",
     "js-yaml": "^4.1.0",
     "node-fetch": "^3.3.2",
-    "@types/node-fetch": "^2.6.11",
     "ts-jest": "^29.1.2"
   }
 }

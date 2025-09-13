@@ -1,0 +1,490 @@
+/**
+ * Design Token System - Unified Design System
+ *
+ * This file contains comprehensive design tokens following the DesignToken
+ * entity structure from the data model. Tokens are organized by category
+ * and support both light and dark theme variants.
+ *
+ * Architecture:
+ * - Primitive tokens: Raw values (colors, measurements)
+ * - Semantic tokens: Purpose-driven (primary, secondary, accent)
+ * - Component tokens: Component-specific values
+ *
+ * Compatible with Tailwind CSS integration via CSS custom properties.
+ */
+
+:root {
+  /* ========================================
+   * PRIMITIVE COLOR TOKENS
+   * Raw color values used as building blocks
+   * ======================================== */
+
+  /* Blue Scale - Primary Brand */
+  --primitive-blue-50: #eff6ff;
+  --primitive-blue-100: #dbeafe;
+  --primitive-blue-200: #bfdbfe;
+  --primitive-blue-300: #93c5fd;
+  --primitive-blue-400: #60a5fa;
+  --primitive-blue-500: #3b82f6;
+  --primitive-blue-600: #2563eb;
+  --primitive-blue-700: #1d4ed8;
+  --primitive-blue-800: #1e40af;
+  --primitive-blue-900: #1e3a8a;
+  --primitive-blue-950: #172554;
+
+  /* Gray Scale - Neutral Colors */
+  --primitive-gray-50: #f9fafb;
+  --primitive-gray-100: #f3f4f6;
+  --primitive-gray-200: #e5e7eb;
+  --primitive-gray-300: #d1d5db;
+  --primitive-gray-400: #9ca3af;
+  --primitive-gray-500: #6b7280;
+  --primitive-gray-600: #4b5563;
+  --primitive-gray-700: #374151;
+  --primitive-gray-800: #1f2937;
+  --primitive-gray-900: #111827;
+  --primitive-gray-950: #030712;
+
+  /* Green Scale - Success States */
+  --primitive-green-50: #f0fdf4;
+  --primitive-green-100: #dcfce7;
+  --primitive-green-200: #bbf7d0;
+  --primitive-green-300: #86efac;
+  --primitive-green-400: #4ade80;
+  --primitive-green-500: #22c55e;
+  --primitive-green-600: #16a34a;
+  --primitive-green-700: #15803d;
+  --primitive-green-800: #166534;
+  --primitive-green-900: #14532d;
+  --primitive-green-950: #052e16;
+
+  /* Red Scale - Error States */
+  --primitive-red-50: #fef2f2;
+  --primitive-red-100: #fee2e2;
+  --primitive-red-200: #fecaca;
+  --primitive-red-300: #fca5a5;
+  --primitive-red-400: #f87171;
+  --primitive-red-500: #ef4444;
+  --primitive-red-600: #dc2626;
+  --primitive-red-700: #b91c1c;
+  --primitive-red-800: #991b1b;
+  --primitive-red-900: #7f1d1d;
+  --primitive-red-950: #450a0a;
+
+  /* Orange Scale - Warning States */
+  --primitive-orange-50: #fff7ed;
+  --primitive-orange-100: #ffedd5;
+  --primitive-orange-200: #fed7aa;
+  --primitive-orange-300: #fdba74;
+  --primitive-orange-400: #fb923c;
+  --primitive-orange-500: #f97316;
+  --primitive-orange-600: #ea580c;
+  --primitive-orange-700: #c2410c;
+  --primitive-orange-800: #9a3412;
+  --primitive-orange-900: #7c2d12;
+  --primitive-orange-950: #431407;
+
+  /* Teal Scale - Info States */
+  --primitive-teal-50: #f0fdfa;
+  --primitive-teal-100: #ccfbf1;
+  --primitive-teal-200: #99f6e4;
+  --primitive-teal-300: #5eead4;
+  --primitive-teal-400: #2dd4bf;
+  --primitive-teal-500: #14b8a6;
+  --primitive-teal-600: #0d9488;
+  --primitive-teal-700: #0f766e;
+  --primitive-teal-800: #115e59;
+  --primitive-teal-900: #134e4a;
+  --primitive-teal-950: #042f2e;
+
+  /* Purple Scale - Accent Colors */
+  --primitive-purple-50: #faf5ff;
+  --primitive-purple-100: #f3e8ff;
+  --primitive-purple-200: #e9d5ff;
+  --primitive-purple-300: #d8b4fe;
+  --primitive-purple-400: #c084fc;
+  --primitive-purple-500: #a855f7;
+  --primitive-purple-600: #9333ea;
+  --primitive-purple-700: #7c3aed;
+  --primitive-purple-800: #6b21a8;
+  --primitive-purple-900: #581c87;
+  --primitive-purple-950: #3b0764;
+
+  /* ========================================
+   * SPACING TOKENS
+   * Based on 4px base unit with scale
+   * ======================================== */
+
+  --spacing-0: 0;
+  --spacing-px: 1px;
+  --spacing-0-5: 0.125rem; /* 2px */
+  --spacing-1: 0.25rem;    /* 4px */
+  --spacing-1-5: 0.375rem; /* 6px */
+  --spacing-2: 0.5rem;     /* 8px */
+  --spacing-2-5: 0.625rem; /* 10px */
+  --spacing-3: 0.75rem;    /* 12px */
+  --spacing-3-5: 0.875rem; /* 14px */
+  --spacing-4: 1rem;       /* 16px */
+  --spacing-5: 1.25rem;    /* 20px */
+  --spacing-6: 1.5rem;     /* 24px */
+  --spacing-8: 2rem;       /* 32px */
+  --spacing-10: 2.5rem;    /* 40px */
+  --spacing-12: 3rem;      /* 48px */
+  --spacing-16: 4rem;      /* 64px */
+  --spacing-20: 5rem;      /* 80px */
+  --spacing-24: 6rem;      /* 96px */
+  --spacing-32: 8rem;      /* 128px */
+  --spacing-40: 10rem;     /* 160px */
+  --spacing-48: 12rem;     /* 192px */
+  --spacing-64: 16rem;     /* 256px */
+
+  /* ========================================
+   * TYPOGRAPHY TOKENS
+   * Font families, sizes, weights, line heights
+   * ======================================== */
+
+  /* Font Families */
+  --font-family-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-5xl: 3rem;       /* 48px */
+  --font-size-6xl: 3.75rem;    /* 60px */
+  --font-size-7xl: 4.5rem;     /* 72px */
+  --font-size-8xl: 6rem;       /* 96px */
+  --font-size-9xl: 8rem;       /* 128px */
+
+  /* Font Weights */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /* ========================================
+   * BORDER TOKENS
+   * Border widths, radii, and styles
+   * ======================================== */
+
+  /* Border Widths */
+  --border-width-0: 0;
+  --border-width-default: 1px;
+  --border-width-2: 2px;
+  --border-width-4: 4px;
+  --border-width-8: 8px;
+
+  /* Border Radii */
+  --border-radius-none: 0;
+  --border-radius-sm: 0.125rem;   /* 2px */
+  --border-radius: 0.25rem;       /* 4px */
+  --border-radius-md: 0.375rem;   /* 6px */
+  --border-radius-lg: 0.5rem;     /* 8px */
+  --border-radius-xl: 0.75rem;    /* 12px */
+  --border-radius-2xl: 1rem;      /* 16px */
+  --border-radius-3xl: 1.5rem;    /* 24px */
+  --border-radius-full: 9999px;
+
+  /* ========================================
+   * SHADOW TOKENS
+   * Box shadows for elevation and depth
+   * ======================================== */
+
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* ========================================
+   * BREAKPOINT TOKENS
+   * Responsive design breakpoints
+   * ======================================== */
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ========================================
+   * SEMANTIC COLOR TOKENS - LIGHT THEME
+   * Purpose-driven colors for UI elements
+   * ======================================== */
+
+  /* Primary Brand Colors */
+  --color-primary: var(--primitive-blue-600);
+  --color-primary-hover: var(--primitive-blue-700);
+  --color-primary-active: var(--primitive-blue-800);
+  --color-primary-disabled: var(--primitive-blue-300);
+  --color-primary-foreground: white;
+
+  /* Secondary Colors */
+  --color-secondary: var(--primitive-gray-600);
+  --color-secondary-hover: var(--primitive-gray-700);
+  --color-secondary-active: var(--primitive-gray-800);
+  --color-secondary-disabled: var(--primitive-gray-300);
+  --color-secondary-foreground: white;
+
+  /* Accent Colors */
+  --color-accent: var(--primitive-purple-600);
+  --color-accent-hover: var(--primitive-purple-700);
+  --color-accent-active: var(--primitive-purple-800);
+  --color-accent-disabled: var(--primitive-purple-300);
+  --color-accent-foreground: white;
+
+  /* State Colors */
+  --color-success: var(--primitive-green-600);
+  --color-success-hover: var(--primitive-green-700);
+  --color-success-foreground: white;
+  --color-warning: var(--primitive-orange-500);
+  --color-warning-hover: var(--primitive-orange-600);
+  --color-warning-foreground: white;
+  --color-error: var(--primitive-red-600);
+  --color-error-hover: var(--primitive-red-700);
+  --color-error-foreground: white;
+  --color-info: var(--primitive-teal-600);
+  --color-info-hover: var(--primitive-teal-700);
+  --color-info-foreground: white;
+
+  /* Surface Colors */
+  --color-background: white;
+  --color-surface: white;
+  --color-surface-secondary: var(--primitive-gray-50);
+  --color-surface-tertiary: var(--primitive-gray-100);
+  --color-surface-hover: var(--primitive-gray-50);
+  --color-surface-active: var(--primitive-gray-100);
+
+  /* Text Colors */
+  --color-text: var(--primitive-gray-900);
+  --color-text-secondary: var(--primitive-gray-600);
+  --color-text-tertiary: var(--primitive-gray-500);
+  --color-text-disabled: var(--primitive-gray-400);
+  --color-text-on-primary: white;
+  --color-text-on-secondary: white;
+  --color-text-on-surface: var(--primitive-gray-900);
+
+  /* Border Colors */
+  --color-border: var(--primitive-gray-200);
+  --color-border-secondary: var(--primitive-gray-300);
+  --color-border-tertiary: var(--primitive-gray-400);
+  --color-border-focus: var(--primitive-blue-500);
+  --color-border-error: var(--primitive-red-500);
+  --color-border-success: var(--primitive-green-500);
+
+  /* Focus Ring Colors */
+  --color-focus-ring: var(--primitive-blue-500);
+  --color-focus-ring-offset: white;
+
+  /* ========================================
+   * COMPONENT-SPECIFIC TOKENS
+   * Token values for specific components
+   * ======================================== */
+
+  /* Button Component Tokens */
+  --button-height-sm: 2rem;     /* 32px */
+  --button-height-md: 2.5rem;   /* 40px */
+  --button-height-lg: 3rem;     /* 48px */
+  --button-padding-x-sm: 0.75rem;
+  --button-padding-x-md: 1rem;
+  --button-padding-x-lg: 1.5rem;
+  --button-border-radius: var(--border-radius-md);
+  --button-font-weight: var(--font-weight-medium);
+  --button-font-size-sm: var(--font-size-sm);
+  --button-font-size-md: var(--font-size-base);
+  --button-font-size-lg: var(--font-size-lg);
+
+  /* Input Component Tokens */
+  --input-height-sm: 2rem;
+  --input-height-md: 2.5rem;
+  --input-height-lg: 3rem;
+  --input-padding-x: 0.75rem;
+  --input-border-radius: var(--border-radius-md);
+  --input-border-width: var(--border-width-default);
+  --input-font-size: var(--font-size-sm);
+
+  /* Card Component Tokens */
+  --card-padding-sm: 1rem;
+  --card-padding-md: 1.5rem;
+  --card-padding-lg: 2rem;
+  --card-border-radius: var(--border-radius-lg);
+  --card-border-width: var(--border-width-default);
+  --card-shadow: var(--shadow-sm);
+
+  /* ========================================
+   * MOTION TOKENS
+   * Animation and transition values
+   * ======================================== */
+
+  /* Duration */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  /* Easing */
+  --easing-linear: linear;
+  --easing-ease: ease;
+  --easing-ease-in: ease-in;
+  --easing-ease-out: ease-out;
+  --easing-ease-in-out: ease-in-out;
+  --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ========================================
+   * Z-INDEX TOKENS
+   * Layering system for stacked elements
+   * ======================================== */
+
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+  --z-index-notification: 1080;
+}
+
+/* ========================================
+ * DARK THEME OVERRIDES
+ * Token overrides for dark theme support
+ * ======================================== */
+
+[data-theme="dark"] {
+  /* Surface Colors - Dark */
+  --color-background: var(--primitive-gray-900);
+  --color-surface: var(--primitive-gray-800);
+  --color-surface-secondary: var(--primitive-gray-750);
+  --color-surface-tertiary: var(--primitive-gray-700);
+  --color-surface-hover: var(--primitive-gray-750);
+  --color-surface-active: var(--primitive-gray-700);
+
+  /* Text Colors - Dark */
+  --color-text: var(--primitive-gray-100);
+  --color-text-secondary: var(--primitive-gray-300);
+  --color-text-tertiary: var(--primitive-gray-400);
+  --color-text-disabled: var(--primitive-gray-600);
+  --color-text-on-surface: var(--primitive-gray-100);
+
+  /* Border Colors - Dark */
+  --color-border: var(--primitive-gray-700);
+  --color-border-secondary: var(--primitive-gray-600);
+  --color-border-tertiary: var(--primitive-gray-500);
+
+  /* Primary Colors - Adjusted for dark theme */
+  --color-primary: var(--primitive-blue-500);
+  --color-primary-hover: var(--primitive-blue-400);
+  --color-primary-active: var(--primitive-blue-300);
+
+  /* Secondary Colors - Adjusted for dark theme */
+  --color-secondary: var(--primitive-gray-400);
+  --color-secondary-hover: var(--primitive-gray-300);
+  --color-secondary-active: var(--primitive-gray-200);
+  --color-secondary-foreground: var(--primitive-gray-900);
+
+  /* Accent Colors - Adjusted for dark theme */
+  --color-accent: var(--primitive-purple-400);
+  --color-accent-hover: var(--primitive-purple-300);
+  --color-accent-active: var(--primitive-purple-200);
+
+  /* Focus Ring - Dark theme */
+  --color-focus-ring-offset: var(--primitive-gray-900);
+
+  /* Card shadow adjustment for dark theme */
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+}
+
+/* ========================================
+ * HIGH CONTRAST THEME
+ * Enhanced contrast for accessibility
+ * ======================================== */
+
+[data-theme="high-contrast"] {
+  /* High contrast adjustments */
+  --color-primary: #0066cc;
+  --color-primary-hover: #004499;
+  --color-text: #000000;
+  --color-background: #ffffff;
+  --color-border: #000000;
+  --border-width-default: 2px;
+
+  /* Enhanced focus indicators */
+  --color-focus-ring: #ff6600;
+  --border-width-focus: 3px;
+}
+
+/* ========================================
+ * REDUCED MOTION SUPPORT
+ * Respect user's motion preferences
+ * ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+    --easing-bounce: ease;
+    --easing-smooth: ease;
+  }
+}
+
+/* ========================================
+ * TOKEN VALIDATION UTILITIES
+ * CSS custom properties for token validation
+ * ======================================== */
+
+/**
+ * These utilities help validate token usage during development.
+ * They can be removed in production builds.
+ */
+
+/* Token category markers for debugging */
+:root {
+  --token-category-color: "color";
+  --token-category-spacing: "spacing";
+  --token-category-typography: "typography";
+  --token-category-border: "border";
+  --token-category-shadow: "shadow";
+  --token-category-motion: "motion";
+  --token-category-breakpoint: "breakpoint";
+}
+
+/* Development-only token usage tracking */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --development-mode: true;
+  }
+}
