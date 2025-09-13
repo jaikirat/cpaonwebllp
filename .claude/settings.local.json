@@ -52,7 +52,10 @@
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr create --title \"Fix Cloudflare Pages Tailwind CSS dependency error\" --base master --body \"$(cat <<''EOF''\n## Summary\n- Fix missing Tailwind CSS PostCSS dependency error in Cloudflare Pages production builds\n- Move Tailwind CSS packages from devDependencies to dependencies\n\n## Problem\n- Production build failing with \"Cannot find module '@tailwindcss/postcss'\" error\n- Cloudflare Pages production builds may not install devDependencies\n- PostCSS requires Tailwind packages during build process\n\n## Solution\n- Move `@tailwindcss/postcss` and `tailwindcss` to dependencies\n- Ensures packages are available during production build\n- Maintains all Tailwind CSS functionality\n\n## Test plan\n- [x] Local build succeeds with new dependency structure\n- [x] Static export generates correctly\n- [ ] Cloudflare Pages production build succeeds after merge\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\nEOF\n)\")",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 3 --merge)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 4 --merge)",
-      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 5 --merge)"
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 5 --merge)",
+      "Bash(git branch:*)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 6 --merge)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" pr merge 6 --admin --merge)"
     ],
     "deny": [],
     "ask": []
