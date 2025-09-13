@@ -24,12 +24,12 @@ module.exports = {
       tsconfig: {
         jsx: 'react-jsx',
       },
+      useESM: true,
     }],
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
-  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(gzip-size|filesize)/)'
+  ],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'mjs'],
 };

@@ -286,9 +286,7 @@ export interface CardStateTransitions {
     onBlur: 'selected';
     onMouseEnter: 'selected-hover';
   };
-  disabled: {
-    // No state transitions allowed
-  };
+  disabled: Record<string, never>;
 }
 
 /**

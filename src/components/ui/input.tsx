@@ -23,22 +23,68 @@ import { cn } from '@/lib/utils';
 // ================================
 
 /**
- * Input component props based on contract specification
+ * Props interface for the Input component.
+ *
+ * Comprehensive interface covering all input functionality including
+ * validation states, icons, accessibility features, and form integration.
+ * Supports both controlled and uncontrolled usage patterns.
+ *
+ * @example Basic Usage
+ * ```tsx
+ * const inputProps: InputProps = {
+ *   type: 'email',
+ *   size: 'lg',
+ *   state: 'error',
+ *   errorMessage: 'Please enter a valid email',
+ *   startIcon: <EmailIcon />,
+ *   clearable: true
+ * };
+ * ```
+ *
+ * @since 1.0.0
  */
 interface InputProps {
   /**
-   * Input type
+   * HTML input type.
+   *
+   * Determines keyboard behavior on mobile devices and browser
+   * validation patterns. Each type provides appropriate input
+   * method and validation.
+   *
    * @default "text"
+   * @example
+   * ```tsx
+   * <Input type="email" placeholder="user@example.com" />
+   * <Input type="password" autoComplete="current-password" />
+   * <Input type="search" placeholder="Search..." />
+   * ```
    */
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
 
   /**
-   * Input value
+   * Controlled component value.
+   *
+   * When provided, makes this a controlled component. Must be used
+   * with onChange handler to update the value.
+   *
+   * @example
+   * ```tsx
+   * const [value, setValue] = useState('');
+   * <Input value={value} onChange={(e) => setValue(e.target.value)} />
+   * ```
    */
   value?: string;
 
   /**
-   * Default value for uncontrolled inputs
+   * Default value for uncontrolled inputs.
+   *
+   * Sets initial value without making the component controlled.
+   * Component manages its own state internally.
+   *
+   * @example
+   * ```tsx
+   * <Input defaultValue="Initial text" onChange={handleChange} />
+   * ```
    */
   defaultValue?: string;
 
@@ -66,45 +112,159 @@ interface InputProps {
   required?: boolean;
 
   /**
-   * Input size affecting padding and font size
+   * Size variant affecting padding, font size, and height.
+   *
+   * - `sm`: 32px height, compact for dense layouts
+   * - `md`: 40px height, standard for most forms
+   * - `lg`: 48px height, prominent for key inputs
+   *
    * @default "md"
+   * @example
+   * ```tsx
+   * <Input size="sm" placeholder="Compact input" />
+   * <Input size="lg" placeholder="Large prominent input" />
+   * ```
    */
   size?: 'sm' | 'md' | 'lg';
 
   /**
-   * Visual state of the input
+   * Visual validation state of the input.
+   *
+   * Controls border color, focus ring, and message styling.
+   * Use with errorMessage or helperText for complete feedback.
+   *
+   * - `default`: Normal state with neutral styling
+   * - `error`: Red styling for validation errors
+   * - `warning`: Orange styling for warnings
+   * - `success`: Green styling for successful validation
+   *
    * @default "default"
+   * @example
+   * ```tsx
+   * <Input state="error" errorMessage="Email is required" />
+   * <Input state="success" helperText="Email format is valid" />
+   * ```
    */
   state?: 'default' | 'error' | 'warning' | 'success';
 
   /**
-   * Error message to display
+   * Error message to display below the input.
+   *
+   * Automatically sets aria-invalid and creates proper
+   * association for screen readers. Typically used with
+   * state="error" for visual consistency.
+   *
+   * @example
+   * ```tsx
+   * <Input
+   *   state="error"
+   *   errorMessage="Password must be at least 8 characters"
+   *   aria-describedby="password-requirements"
+   * />
+   * ```
+   *
+   * @accessibility
+   * - Creates aria-describedby relationship
+   * - Announces changes with aria-live="polite"
+   * - Sets role="alert" for immediate errors
    */
   errorMessage?: string;
 
   /**
-   * Helper text to display below input
+   * Helper text to display below the input.
+   *
+   * Provides additional context or instructions for users.
+   * Takes precedence over errorMessage when both are provided.
+   *
+   * @example
+   * ```tsx
+   * <Input
+   *   type="password"
+   *   helperText="Must contain uppercase, lowercase, and numbers"
+   * />
+   * ```
+   *
+   * @accessibility
+   * - Linked via aria-describedby for screen readers
+   * - Does not interfere with error announcements
    */
   helperText?: string;
 
   /**
-   * Label for the input
+   * Label text displayed above the input.
+   *
+   * Creates proper form association and displays required
+   * indicator when required=true. Essential for accessibility.
+   *
+   * @example
+   * ```tsx
+   * <Input label="Email Address" required />
+   * <Input label="Optional Notes" helperText="Add any comments" />
+   * ```
+   *
+   * @accessibility
+   * - Creates htmlFor relationship with input
+   * - Required indicator announced to screen readers
+   * - Clicking label focuses the input
    */
   label?: string;
 
   /**
-   * Icon to display at start of input
+   * Icon displayed at the start (left) of the input.
+   *
+   * Automatically sized and positioned. Hidden from screen readers
+   * as it should be decorative. Adjusts spacing appropriately.
+   *
+   * @example
+   * ```tsx
+   * <Input startIcon={<EmailIcon />} placeholder="Enter email" />
+   * <Input startIcon={<SearchIcon />} type="search" />
+   * ```
+   *
+   * @accessibility
+   * - Marked as decorative with aria-hidden
+   * - Meaning conveyed through label or placeholder
    */
   startIcon?: React.ReactNode;
 
   /**
-   * Icon to display at end of input
+   * Icon displayed at the end (right) of the input.
+   *
+   * Automatically sized and positioned. Not shown when clearable
+   * button is active. Hidden from screen readers.
+   *
+   * @example
+   * ```tsx
+   * <Input endIcon={<CalendarIcon />} placeholder="Select date" />
+   * <Input endIcon={<HelpIcon />} aria-describedby="help-text" />
+   * ```
+   *
+   * @accessibility
+   * - Marked as decorative with aria-hidden
+   * - For interactive icons, use separate button elements
    */
   endIcon?: React.ReactNode;
 
   /**
-   * Whether to show clear button when input has value
+   * Whether to show clear button when input has value.
+   *
+   * Displays an X button that clears the input when clicked.
+   * Also clears with Escape key. Respects disabled/readonly states.
+   *
    * @default false
+   * @example
+   * ```tsx
+   * <Input
+   *   clearable
+   *   placeholder="Type to search..."
+   *   onClear={() => console.log('Cleared!')}
+   * />
+   * ```
+   *
+   * @accessibility
+   * - Clear button has aria-label="Clear input"
+   * - Keyboard accessible with Escape key
+   * - Focus management preserves user context
    */
   clearable?: boolean;
 
@@ -145,7 +305,19 @@ interface InputProps {
   id?: string;
 
   /**
-   * Change handler
+   * Callback fired when input value changes.
+   *
+   * Essential for controlled components. Receives standard
+   * React change event with current target value.
+   *
+   * @param event - React change event from input element
+   * @example
+   * ```tsx
+   * const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   *   setValue(e.target.value);
+   *   validateInput(e.target.value);
+   * };
+   * ```
    */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
@@ -165,7 +337,19 @@ interface InputProps {
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
   /**
-   * Clear button click handler
+   * Callback fired when clear button is clicked.
+   *
+   * Called in addition to onChange when clearable input is cleared.
+   * Useful for additional cleanup or tracking actions.
+   *
+   * @example
+   * ```tsx
+   * const handleClear = () => {
+   *   setValue('');
+   *   setSearchResults([]);
+   *   trackEvent('search_cleared');
+   * };
+   * ```
    */
   onClear?: () => void;
 
@@ -175,7 +359,21 @@ interface InputProps {
   className?: string;
 
   /**
-   * Accessible label when label prop is not provided
+   * Accessible label when visual label is not provided.
+   *
+   * Required when no label prop is used. Should describe
+   * the input's purpose clearly for screen reader users.
+   *
+   * @example
+   * ```tsx
+   * <Input aria-label="Search products" startIcon={<SearchIcon />} />
+   * <Input aria-label="Enter verification code" type="number" />
+   * ```
+   *
+   * @accessibility
+   * - Essential for inputs without visible labels
+   * - Should be descriptive and specific
+   * - Overrides any label text for screen readers
    */
   'aria-label'?: string;
 
@@ -200,7 +398,21 @@ interface InputProps {
 // ================================
 
 /**
- * Clear button component
+ * Internal clear button component for clearable inputs.
+ *
+ * Provides a standardized X button that appears when an input
+ * has content and clearable=true. Handles focus management and
+ * accessibility automatically.
+ *
+ * @param props - Clear button props
+ * @param props.onClick - Function called when button is clicked
+ * @param props.size - Size matching parent input
+ * @param props.className - Additional CSS classes
+ * @param ref - Forwarded ref to button element
+ * @returns Accessible clear button element
+ *
+ * @internal This component is not exported for external use
+ * @since 1.0.0
  */
 const ClearButton = React.forwardRef<
   HTMLButtonElement,
@@ -253,7 +465,76 @@ ClearButton.displayName = 'ClearButton';
 // ================================
 
 /**
- * Input component with comprehensive feature set
+ * Input component with comprehensive form and accessibility features.
+ *
+ * A fully-featured text input supporting validation states, icons, clearing,
+ * and complete accessibility compliance. Works as both controlled and
+ * uncontrolled component with proper form integration.
+ *
+ * @param props - Input component properties
+ * @param ref - Forwarded ref to the input element
+ * @returns A styled, accessible input element with label and help text
+ *
+ * @example Basic Text Input
+ * ```tsx
+ * <Input
+ *   label="Full Name"
+ *   placeholder="Enter your name"
+ *   required
+ * />
+ * ```
+ *
+ * @example Email Input with Validation
+ * ```tsx
+ * <Input
+ *   type="email"
+ *   label="Email Address"
+ *   state={isValid ? 'success' : 'error'}
+ *   errorMessage={!isValid ? 'Please enter valid email' : undefined}
+ *   startIcon={<MailIcon />}
+ * />
+ * ```
+ *
+ * @example Search Input with Clear
+ * ```tsx
+ * <Input
+ *   type="search"
+ *   placeholder="Search products..."
+ *   startIcon={<SearchIcon />}
+ *   clearable
+ *   onClear={() => setResults([])}
+ * />
+ * ```
+ *
+ * @example Controlled Input with Validation
+ * ```tsx
+ * const [value, setValue] = useState('');
+ * const [error, setError] = useState('');
+ *
+ * <Input
+ *   value={value}
+ *   onChange={(e) => {
+ *     setValue(e.target.value);
+ *     setError(validateInput(e.target.value));
+ *   }}
+ *   state={error ? 'error' : 'default'}
+ *   errorMessage={error}
+ *   label="Username"
+ *   helperText="Must be 3-20 characters"
+ * />
+ * ```
+ *
+ * @accessibility
+ * - WCAG 2.1 AA compliant form controls
+ * - Proper label association with htmlFor/id
+ * - Error messages announced to screen readers
+ * - Clear button keyboard accessible (Escape key)
+ * - Support for aria-describedby and aria-invalid
+ * - Required field indication for screen readers
+ * - Focus management maintains user context
+ *
+ * @since 1.0.0
+ * @see {@link InputProps} - Component props interface
  */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

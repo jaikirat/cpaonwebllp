@@ -362,9 +362,7 @@ export interface InputStateTransitions {
     onBlur: 'error';
     onValid: 'focus';
   };
-  disabled: {
-    // No state transitions allowed
-  };
+  disabled: Record<string, never>;
   readonly: {
     onFocus: 'focus-readonly';
   };

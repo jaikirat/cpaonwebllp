@@ -266,9 +266,7 @@ export interface ButtonStateTransitions {
   active: {
     onMouseUp: 'hover' | 'focus-hover' | 'default';
   };
-  disabled: {
-    // No state transitions allowed
-  };
+  disabled: Record<string, never>;
   loading: {
     // No user interactions allowed, only programmatic state change
     onLoadingComplete: 'default';

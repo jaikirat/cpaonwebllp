@@ -25,7 +25,28 @@ import { cn } from '@/lib/utils';
 // ================================
 
 /**
- * Simple loading spinner component for button loading states
+ * Simple loading spinner component for button loading states.
+ *
+ * This internal component provides a consistent spinner animation
+ * for buttons in loading state. The size automatically adapts
+ * to the parent button's size configuration.
+ *
+ * @param props - Spinner component props
+ * @param props.size - Size of the spinner in pixels
+ * @param props.className - Additional CSS classes
+ * @param ref - Forwarded ref to the SVG element
+ * @returns A rotating spinner SVG element
+ *
+ * @example
+ * ```tsx
+ * <LoadingSpinner size={16} className="text-white" />
+ * ```
+ *
+ * @accessibility
+ * - Uses `aria-hidden="true"` to hide from screen readers
+ * - Relies on parent button's `aria-busy` state for accessibility
+ *
+ * @since 1.0.0
  */
 const LoadingSpinner = React.forwardRef<
   SVGSVGElement,
@@ -63,8 +84,28 @@ LoadingSpinner.displayName = 'LoadingSpinner';
 // ================================
 
 /**
- * Button variant styles using class-variance-authority
- * Integrates with design tokens through CSS custom properties
+ * Button variant styles using class-variance-authority.
+ *
+ * Defines all visual variations and size configurations for buttons.
+ * Integrates seamlessly with the design token system through CSS
+ * custom properties, ensuring consistent theming across light/dark modes.
+ *
+ * @example
+ * ```tsx
+ * const buttonClasses = buttonVariants({
+ *   variant: 'primary',
+ *   size: 'lg',
+ *   fullWidth: true
+ * });
+ * ```
+ *
+ * @accessibility
+ * - Maintains 3:1 contrast ratio for focus indicators
+ * - Supports high contrast mode with enhanced borders
+ * - Respects user's motion preferences for transitions
+ *
+ * @since 1.0.0
+ * @see {@link Button} - Main button component that uses these variants
  */
 const buttonVariants = cva(
   [
@@ -181,55 +222,186 @@ const buttonVariants = cva(
 // BUTTON PROPS INTERFACE
 // ================================
 
+/**
+ * Props interface for the Button component.
+ *
+ * Extends native HTML button attributes with additional design system
+ * properties for variants, sizes, icons, and accessibility features.
+ *
+ * @example
+ * ```tsx
+ * const buttonProps: ButtonProps = {
+ *   variant: 'primary',
+ *   size: 'lg',
+ *   loading: true,
+ *   startIcon: <SaveIcon />,
+ *   onClick: handleSave,
+ *   'aria-label': 'Save document'
+ * };
+ * ```
+ *
+ * @since 1.0.0
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   /**
-   * Button content (text, icons, or other React nodes)
+   * Button content (text, icons, or other React nodes).
+   *
+   * @example
+   * ```tsx
+   * <Button>Click me</Button>
+   * <Button><SaveIcon /> Save</Button>
+   * ```
    */
   children: React.ReactNode;
 
   /**
-   * Visual style variant of the button
+   * Visual style variant of the button.
+   *
+   * - `default`: Standard button with subtle background
+   * - `primary`: Prominent call-to-action button
+   * - `secondary`: Less prominent secondary action
+   * - `outline`: Transparent with border
+   * - `ghost`: Completely transparent until hover
+   * - `destructive`: Warning/danger actions (red theme)
+   *
    * @default "default"
+   * @example
+   * ```tsx
+   * <Button variant="primary">Submit</Button>
+   * <Button variant="destructive">Delete</Button>
+   * ```
    */
   variant?: 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 
   /**
-   * Size of the button affecting padding and font size
+   * Size of the button affecting padding and font size.
+   *
+   * - `sm`: 32px height, compact spacing
+   * - `md`: 40px height, standard spacing
+   * - `lg`: 48px height, generous spacing
+   * - `xl`: 56px height, extra generous spacing
+   *
    * @default "md"
+   * @example
+   * ```tsx
+   * <Button size="sm">Small</Button>
+   * <Button size="xl">Extra Large</Button>
+   * ```
    */
   size?: 'sm' | 'md' | 'lg' | 'xl';
 
   /**
-   * Whether the button should take full width of container
+   * Whether the button should take full width of its container.
+   *
+   * Useful for mobile layouts or form submissions where you want
+   * the button to span the entire available width.
+   *
    * @default false
+   * @example
+   * ```tsx
+   * <Button fullWidth>Full Width Button</Button>
+   * ```
    */
   fullWidth?: boolean;
 
   /**
-   * Loading state - shows spinner and disables interaction
+   * Loading state - shows spinner and disables interaction.
+   *
+   * When true, displays a spinner, dims the text, and prevents
+   * user interaction. The button remains focusable but disabled.
+   * Screen readers will announce the loading state via aria-busy.
+   *
    * @default false
+   * @example
+   * ```tsx
+   * const [loading, setLoading] = useState(false);
+   *
+   * <Button loading={loading} onClick={handleAsync}>
+   *   Submit Form
+   * </Button>
+   * ```
+   *
+   * @accessibility
+   * - Sets `aria-busy="true"` for screen readers
+   * - Maintains focus capability for keyboard users
    */
   loading?: boolean;
 
   /**
-   * Icon to display before button text
+   * Icon to display before button text.
+   *
+   * The icon is automatically sized to match the button size
+   * and hidden from screen readers with aria-hidden.
+   *
+   * @example
+   * ```tsx
+   * <Button startIcon={<PlusIcon />}>Add Item</Button>
+   * <Button startIcon={<SaveIcon />} loading={loading}>
+   *   Save Document
+   * </Button>
+   * ```
+   *
+   * @accessibility
+   * - Automatically marked as decorative with `aria-hidden`
+   * - Icon meaning should be conveyed through button text
    */
   startIcon?: React.ReactNode;
 
   /**
-   * Icon to display after button text
+   * Icon to display after button text.
+   *
+   * The icon is automatically sized to match the button size
+   * and hidden from screen readers with aria-hidden.
+   *
+   * @example
+   * ```tsx
+   * <Button endIcon={<ChevronRightIcon />}>Continue</Button>
+   * <Button endIcon={<ExternalLinkIcon />}>Open Link</Button>
+   * ```
+   *
+   * @accessibility
+   * - Automatically marked as decorative with `aria-hidden`
+   * - Icon meaning should be conveyed through button text
    */
   endIcon?: React.ReactNode;
 
   /**
-   * Accessible label when button content is not descriptive
+   * Accessible label when button content is not descriptive.
+   *
+   * Use when the button contains only an icon or when the visible
+   * text doesn't fully describe the button's action.
+   *
+   * @example
+   * ```tsx
+   * <Button startIcon={<CloseIcon />} aria-label="Close dialog" />
+   * <Button aria-label="Save document and continue editing">
+   *   Save
+   * </Button>
+   * ```
+   *
+   * @accessibility
+   * - Overrides the button's visible text for screen readers
+   * - Should describe the action, not just the visual content
    */
   'aria-label'?: string;
 
   /**
-   * ID of element that describes the button
+   * ID of element that provides additional description.
+   *
+   * References an element that contains helpful information
+   * about the button's purpose or current state.
+   *
+   * @example
+   * ```tsx
+   * <Button aria-describedby="save-help">Save</Button>
+   * <div id="save-help">Saves your work to local storage</div>
+   * ```
+   *
+   * @accessibility
+   * - Screen readers announce the referenced content
+   * - Useful for providing context or current state information
    */
   'aria-describedby'?: string;
 }
@@ -239,15 +411,52 @@ export interface ButtonProps
 // ================================
 
 /**
- * Button component with comprehensive accessibility and design system integration
+ * Button component with comprehensive accessibility and design system integration.
  *
- * Supports all contract requirements including:
- * - Multiple variants and sizes
- * - Loading states with spinner
- * - Icon placement (start/end)
- * - Full accessibility compliance
- * - Design token integration
- * - Proper TypeScript support
+ * A fully-featured button component that implements WCAG 2.1 AA accessibility
+ * standards and integrates seamlessly with the design token system. Supports
+ * all common button patterns including loading states, icons, and multiple
+ * visual variants.
+ *
+ * @param props - Button component properties
+ * @param ref - Forwarded ref to the button element
+ * @returns A styled, accessible button element
+ *
+ * @example Basic Usage
+ * ```tsx
+ * <Button onClick={handleClick}>Click Me</Button>
+ * <Button variant="primary" size="lg">Large Primary</Button>
+ * ```
+ *
+ * @example With Icons and Loading
+ * ```tsx
+ * <Button startIcon={<SaveIcon />} loading={saving}>
+ *   {saving ? 'Saving...' : 'Save Document'}
+ * </Button>
+ * ```
+ *
+ * @example Accessibility Features
+ * ```tsx
+ * <Button
+ *   variant="destructive"
+ *   aria-label="Delete user account permanently"
+ *   aria-describedby="delete-warning"
+ * >
+ *   Delete Account
+ * </Button>
+ * ```
+ *
+ * @accessibility
+ * - WCAG 2.1 AA compliant with 3:1+ contrast ratios
+ * - Keyboard navigation with Enter/Space activation
+ * - Screen reader support with proper ARIA attributes
+ * - Loading states announced via `aria-busy`
+ * - Focus indicators respect user motion preferences
+ * - High contrast mode support with enhanced borders
+ *
+ * @since 1.0.0
+ * @see {@link buttonVariants} - Styling function used internally
+ * @see {@link LoadingSpinner} - Loading state spinner component
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (

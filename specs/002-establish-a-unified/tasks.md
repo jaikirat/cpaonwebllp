@@ -58,11 +58,11 @@
 - [x] T020 Global styles integration in src/app/globals.css
 
 ## Phase 3.5: Polish
-- [ ] T021 [P] Visual regression tests with Playwright in tests/visual/components.spec.ts
-- [ ] T022 [P] Performance tests for component render times in tests/performance/render-performance.test.tsx
-- [ ] T023 [P] Bundle size analysis setup in tests/bundle/size-analysis.test.ts
-- [ ] T024 Component documentation updates in component files (JSDoc comments)
-- [ ] T025 Verify all acceptance scenarios from quickstart.md work correctly
+- [x] T021 [P] Visual regression tests with Playwright in tests/visual/components.spec.ts
+- [x] T022 [P] Performance tests for component render times in tests/performance/render-performance.test.tsx
+- [x] T023 [P] Bundle size analysis setup in tests/bundle/size-analysis.test.ts
+- [x] T024 Component documentation updates in component files (JSDoc comments)
+- [x] T025 Verify all acceptance scenarios from quickstart.md work correctly
 
 ## Dependencies
 - Setup (T001-T004) before tests (T005-T010)

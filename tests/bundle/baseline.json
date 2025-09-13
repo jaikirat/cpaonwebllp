@@ -1,0 +1,98 @@
+{
+  "designSystem": 38184,
+  "themeProvider": 17692,
+  "utils": 18565,
+  "timestamp": "2025-09-13T11:33:38.622Z",
+  "components": {
+    "button": {
+      "raw": 11113,
+      "gzipped": 3182,
+      "formatted": {
+        "raw": "10.9 KB",
+        "gzipped": "3.1 KB"
+      },
+      "lines": 408,
+      "complexity": 8,
+      "checksum": "ab1f350e52a963b405274df215b6eb7c"
+    },
+    "input": {
+      "raw": 15815,
+      "gzipped": 4206,
+      "formatted": {
+        "raw": "15.4 KB",
+        "gzipped": "4.1 KB"
+      },
+      "lines": 630,
+      "complexity": 17,
+      "checksum": "8b04916323a2df59cad2d97e73205fd3"
+    },
+    "card": {
+      "raw": 10180,
+      "gzipped": 2725,
+      "formatted": {
+        "raw": "9.9 KB",
+        "gzipped": "2.7 KB"
+      },
+      "lines": 469,
+      "complexity": 7,
+      "checksum": "8527be2c8bd1d1521ecf3861eef00006"
+    },
+    "label": {
+      "raw": 741,
+      "gzipped": 387,
+      "formatted": {
+        "raw": "741 B",
+        "gzipped": "387 B"
+      },
+      "lines": 24,
+      "complexity": 0,
+      "checksum": "e38238c1724c5ea014d9fa8927ab0d18"
+    }
+  },
+  "analysis": {
+    "totalLines": 1543,
+    "totalComplexity": 32,
+    "averageComplexity": 8
+  },
+  "imports": {
+    "totalImports": 11,
+    "externalDependencies": [
+      "class-variance-authority",
+      "react",
+      "@radix-ui/react-label"
+    ],
+    "internalImports": 4,
+    "circularDependencies": true,
+    "dependencyTree": {
+      "button": [
+        "class-variance-authority",
+        "react",
+        "@/lib/utils"
+      ],
+      "input": [
+        "react",
+        "@/lib/utils"
+      ],
+      "card": [
+        "react",
+        "@/lib/utils"
+      ],
+      "label": [
+        "@radix-ui/react-label",
+        "class-variance-authority",
+        "react",
+        "@/lib/utils"
+      ]
+    }
+  },
+  "checksums": {
+    "themeProvider": "60e1de2eb83524131af70fa146294e22",
+    "utils": "ff3d821feb99b949d37937ffde8e9c34",
+    "components": {
+      "button": "ab1f350e52a963b405274df215b6eb7c",
+      "input": "8b04916323a2df59cad2d97e73205fd3",
+      "card": "8527be2c8bd1d1521ecf3861eef00006",
+      "label": "e38238c1724c5ea014d9fa8927ab0d18"
+    }
+  }
+}
