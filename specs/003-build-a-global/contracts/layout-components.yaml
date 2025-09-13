@@ -1,0 +1,212 @@
+# Layout Component Contracts
+# Global Layout and Navigation Shell Feature
+
+components:
+  Header:
+    description: "Main navigation header component"
+    props:
+      navigation:
+        type: "NavigationItem[]"
+        required: true
+        description: "Primary navigation items"
+      currentPath:
+        type: "string"
+        required: true
+        description: "Current route path for active link highlighting"
+      isAuthenticated:
+        type: "boolean"
+        required: false
+        default: false
+        description: "User authentication state"
+    behaviors:
+      - "MUST render primary navigation items from navigation prop"
+      - "MUST highlight active navigation item based on currentPath"
+      - "MUST show/hide items based on visibility and isAuthenticated"
+      - "MUST provide keyboard navigation support"
+      - "MUST be responsive (mobile hamburger menu)"
+    accessibility:
+      - "role: banner"
+      - "nav element with aria-label='Main navigation'"
+      - "Skip link to main content"
+      - "Keyboard focus management"
+
+  Footer:
+    description: "Site footer with secondary navigation"
+    props:
+      navigation:
+        type: "NavigationItem[]"
+        required: true
+        description: "Secondary navigation items"
+      currentPath:
+        type: "string"
+        required: true
+        description: "Current route path for active link highlighting"
+    behaviors:
+      - "MUST render secondary navigation items"
+      - "MUST highlight active navigation item"
+      - "MUST be responsive"
+    accessibility:
+      - "role: contentinfo"
+      - "nav element with aria-label='Footer navigation'"
+
+  MobileNavigation:
+    description: "Mobile navigation drawer/menu"
+    props:
+      navigation:
+        type: "NavigationItem[]"
+        required: true
+        description: "Navigation items to display"
+      isOpen:
+        type: "boolean"
+        required: true
+        description: "Controls drawer visibility"
+      onToggle:
+        type: "() => void"
+        required: true
+        description: "Callback to toggle drawer"
+      currentPath:
+        type: "string"
+        required: true
+        description: "Current route for active highlighting"
+    behaviors:
+      - "MUST show/hide based on isOpen prop"
+      - "MUST close when navigation item is selected"
+      - "MUST support touch gestures"
+      - "MUST trap focus when open"
+      - "MUST close on escape key"
+    accessibility:
+      - "role: dialog"
+      - "aria-expanded on toggle button"
+      - "Focus trap when open"
+      - "aria-label='Mobile navigation menu'"
+
+  Breadcrumbs:
+    description: "Breadcrumb navigation component"
+    props:
+      path:
+        type: "BreadcrumbPath"
+        required: true
+        description: "Breadcrumb path data"
+      className:
+        type: "string"
+        required: false
+        description: "Additional CSS classes"
+    behaviors:
+      - "MUST render breadcrumb trail from path.segments"
+      - "MUST hide if path.isHomePage is true"
+      - "MUST render current page as non-clickable"
+      - "MUST include JSON-LD structured data"
+      - "MUST truncate long paths appropriately"
+    accessibility:
+      - "nav element with aria-label='Breadcrumb'"
+      - "ol element for semantic structure"
+      - "aria-current='page' on current item"
+
+  LayoutContainer:
+    description: "Responsive container wrapper for page content"
+    props:
+      children:
+        type: "React.ReactNode"
+        required: true
+        description: "Page content to wrap"
+      variant:
+        type: "'default' | 'wide' | 'narrow'"
+        required: false
+        default: "'default'"
+        description: "Container width variant"
+      className:
+        type: "string"
+        required: false
+        description: "Additional CSS classes"
+    behaviors:
+      - "MUST provide responsive padding"
+      - "MUST enforce max-width constraints"
+      - "MUST center content horizontally"
+      - "MUST maintain consistent spacing"
+    accessibility:
+      - "main element for page content"
+      - "Skip link target (id='main-content')"
+
+# Component Composition
+
+layouts:
+  RootLayout:
+    description: "Next.js app/layout.tsx - wraps all pages"
+    structure: |
+      <html>
+        <body>
+          <Header />
+          <main>
+            <Breadcrumbs />
+            <LayoutContainer>
+              {children}
+            </LayoutContainer>
+          </main>
+          <Footer />
+          <MobileNavigation />
+        </body>
+      </html>
+    behaviors:
+      - "MUST include all global layout components"
+      - "MUST manage mobile navigation state"
+      - "MUST generate breadcrumbs from route"
+      - "MUST pass authentication state to components"
+
+# Event Contracts
+
+events:
+  NavigationItemClick:
+    description: "User clicks a navigation item"
+    payload:
+      item: "NavigationItem"
+      source: "'header' | 'footer' | 'mobile'"
+    behavior: "Navigate to item.href, close mobile menu if open"
+
+  MobileMenuToggle:
+    description: "User toggles mobile navigation menu"
+    payload:
+      isOpen: "boolean"
+    behavior: "Update mobile menu state, manage focus"
+
+  RouteChange:
+    description: "Next.js route changes"
+    payload:
+      newPath: "string"
+      previousPath: "string"
+    behavior: "Update breadcrumbs, highlight active nav items"
+
+# Performance Contracts
+
+performance:
+  Header:
+    - "Navigation highlight update: <50ms"
+    - "Mobile menu toggle: <200ms"
+    - "Responsive breakpoint change: <100ms"
+
+  Breadcrumbs:
+    - "Generation from route: <10ms"
+    - "JSON-LD serialization: <5ms"
+
+  LayoutContainer:
+    - "Responsive padding update: <16ms (60fps)"
+
+# Testing Contracts
+
+testing:
+  unit_tests:
+    - "Component renders with required props"
+    - "Event handlers called with correct parameters"
+    - "Accessibility attributes present"
+    - "Responsive classes applied"
+
+  integration_tests:
+    - "Navigation items filter based on authentication"
+    - "Active link highlighting works across routes"
+    - "Mobile menu state synchronizes with header"
+    - "Breadcrumbs generate from Next.js routes"
+
+  e2e_tests:
+    - "Navigation works on desktop and mobile"
+    - "Keyboard navigation functions properly"
+    - "Screen reader announcements work"
+    - "Mobile menu responds to touch gestures"
